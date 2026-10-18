@@ -39,13 +39,13 @@ const LIGHT_ON = { safe: 'bg-risk-safe', warn: 'bg-risk-warn', danger: 'bg-risk-
 /** Decorative three-light semaphore; pair it with a RiskBadge for the meaning. */
 export function RiskLight({ level, className }: { level: RiskLevel; className?: string }) {
   return (
-    <span aria-hidden className={cn('inline-flex flex-col gap-1 rounded-full bg-surface-inverse p-1.5', className)}>
+    <span aria-hidden className={cn('inline-flex flex-col gap-1 rounded-full bg-graphite p-1.5 ring-1 ring-white/10', className)}>
       {LIGHT_ORDER.map((light) => (
         <span
           key={light}
           className={cn(
             'size-2 rounded-full transition-colors duration-300',
-            light === level ? LIGHT_ON[light] : 'bg-ink-inverse/20',
+            light === level ? LIGHT_ON[light] : 'bg-white/15',
           )}
         />
       ))}
