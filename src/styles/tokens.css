@@ -1,0 +1,170 @@
+/*
+ * Mudanzify design tokens.
+ *
+ * Raw palette lives in @theme. Semantic tokens (surface, ink, primary, risk…)
+ * are CSS variables that switch between light and dark mode and are exposed
+ * to Tailwind through @theme inline, e.g. `bg-surface`, `text-ink-muted`.
+ * Components must use token names only, never raw hex values.
+ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Typography */
+  --font-sans: 'Geist Variable', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'Cascadia Code', monospace;
+
+  --text-display: 4.5rem;
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.04em;
+  --text-display--font-weight: 600;
+  --text-title: 2rem;
+  --text-title--line-height: 1.1;
+  --text-title--letter-spacing: -0.025em;
+  --text-title--font-weight: 600;
+
+  /* Base palette: cardboard boxes (kraft) and cream paper */
+  --color-cream: #faf7f2;
+  --color-graphite: #1c1917;
+
+  --color-kraft-50: #faf6f0;
+  --color-kraft-100: #f3eadd;
+  --color-kraft-200: #e8d6be;
+  --color-kraft-300: #dbbf9c;
+  --color-kraft-400: #d1b08a;
+  --color-kraft-500: #c8a27a;
+  --color-kraft-600: #b08560;
+  --color-kraft-700: #8e6a4b;
+  --color-kraft-800: #6e523b;
+  --color-kraft-900: #4f3b2b;
+
+  /* Shape */
+  --radius-card: 1.75rem;
+  --radius-panel: 2.25rem;
+
+  /* Elevation: soft, diffuse shadows */
+  --shadow-soft: 0 1px 2px rgb(28 25 23 / 0.04), 0 8px 24px -12px rgb(28 25 23 / 0.12);
+  --shadow-lifted: 0 2px 4px rgb(28 25 23 / 0.04), 0 24px 48px -20px rgb(28 25 23 / 0.25);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: light;
+
+  --surface: var(--color-cream);
+  --surface-raised: var(--color-white);
+  --surface-sunken: #f2ede5;
+  --surface-inverse: var(--color-graphite);
+  --ink: var(--color-stone-800);
+  --ink-muted: var(--color-stone-600);
+  --ink-inverse: var(--color-white);
+  --line: var(--color-stone-200);
+  --line-strong: var(--color-stone-300);
+
+  /* Primary: indigo, main actions and everything the AI proposes */
+  --primary: var(--color-indigo-600);
+  --primary-hover: var(--color-indigo-700);
+  --primary-ink: var(--color-white);
+  --primary-soft: var(--color-indigo-50);
+  --primary-soft-ink: var(--color-indigo-700);
+
+  /* Accent: amber, highlights, badges and keyboard focus */
+  --accent: var(--color-amber-500);
+  --accent-ink: var(--color-graphite);
+  --accent-soft: var(--color-amber-50);
+
+  /* Risk traffic light. `-ink` variants pass WCAG AA as text. */
+  --risk-safe: var(--color-green-600);
+  --risk-safe-soft: var(--color-green-50);
+  --risk-safe-ink: var(--color-green-700);
+  --risk-warn: var(--color-yellow-500);
+  --risk-warn-soft: var(--color-yellow-50);
+  --risk-warn-ink: var(--color-yellow-800);
+  --risk-danger: var(--color-red-600);
+  --risk-danger-soft: var(--color-red-50);
+  --risk-danger-ink: var(--color-red-700);
+
+  /* Data boxes (cardboard) */
+  --box: var(--color-kraft-100);
+  --box-line: var(--color-kraft-300);
+  --box-ink: var(--color-kraft-900);
+  --box-ink-muted: var(--color-kraft-800);
+  --box-tape: var(--color-kraft-500);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --surface: var(--color-graphite);
+  --surface-raised: var(--color-stone-800);
+  --surface-sunken: #141110;
+  --surface-inverse: var(--color-stone-100);
+  --ink: var(--color-stone-100);
+  --ink-muted: var(--color-stone-400);
+  --ink-inverse: var(--color-graphite);
+  --line: var(--color-stone-700);
+  --line-strong: var(--color-stone-600);
+
+  --primary: var(--color-indigo-400);
+  --primary-hover: var(--color-indigo-300);
+  --primary-ink: var(--color-graphite);
+  --primary-soft: var(--color-indigo-950);
+  --primary-soft-ink: var(--color-indigo-300);
+
+  --accent-soft: color-mix(in oklab, var(--color-amber-500) 15%, transparent);
+
+  --risk-safe: var(--color-green-500);
+  --risk-safe-soft: color-mix(in oklab, var(--color-green-500) 14%, transparent);
+  --risk-safe-ink: var(--color-green-400);
+  --risk-warn: var(--color-yellow-400);
+  --risk-warn-soft: color-mix(in oklab, var(--color-yellow-400) 14%, transparent);
+  --risk-warn-ink: var(--color-yellow-300);
+  --risk-danger: var(--color-red-500);
+  --risk-danger-soft: color-mix(in oklab, var(--color-red-500) 16%, transparent);
+  --risk-danger-ink: var(--color-red-400);
+
+  --box: var(--color-kraft-900);
+  --box-line: var(--color-kraft-700);
+  --box-ink: var(--color-kraft-100);
+  --box-ink-muted: var(--color-kraft-300);
+  --box-tape: var(--color-kraft-400);
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-inverse: var(--ink-inverse);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-ink: var(--primary-ink);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-ink: var(--primary-soft-ink);
+
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-risk-safe: var(--risk-safe);
+  --color-risk-safe-soft: var(--risk-safe-soft);
+  --color-risk-safe-ink: var(--risk-safe-ink);
+  --color-risk-warn: var(--risk-warn);
+  --color-risk-warn-soft: var(--risk-warn-soft);
+  --color-risk-warn-ink: var(--risk-warn-ink);
+  --color-risk-danger: var(--risk-danger);
+  --color-risk-danger-soft: var(--risk-danger-soft);
+  --color-risk-danger-ink: var(--risk-danger-ink);
+
+  --color-box: var(--box);
+  --color-box-line: var(--box-line);
+  --color-box-ink: var(--box-ink);
+  --color-box-ink-muted: var(--box-ink-muted);
+  --color-box-tape: var(--box-tape);
+}
