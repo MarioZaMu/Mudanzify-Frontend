@@ -38,6 +38,20 @@
   }
 }
 
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
 @layer components {
   /* Frosted panel used for the main layout surfaces. */
   .glass {
