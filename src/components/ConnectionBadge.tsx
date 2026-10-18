@@ -15,7 +15,7 @@ export function ConnectionBadge({ state }: { state: AppInfoState }) {
     <div
       role="status"
       aria-live="polite"
-      className="inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-2 text-sm font-medium shadow-sm ring-1 ring-stone-200"
+      className="inline-flex w-fit items-center gap-2.5 rounded-full bg-white px-4 py-2 text-sm font-medium shadow-sm ring-1 ring-stone-200"
     >
       <span aria-hidden className={`size-2.5 rounded-full ${variant.dot}`} />
       {variant.text}
