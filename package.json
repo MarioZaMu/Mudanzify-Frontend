@@ -1,0 +1,9 @@
+{
+  "name": "mudanzify-frontend",
+  "version": "0.1.0",
+  "description": "Mudanzify user interface (React + Tailwind), rendered inside the Electron backend.",
+  "author": "MarioZaMu",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module"
+}
