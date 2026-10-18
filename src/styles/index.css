@@ -1,9 +1,7 @@
 @import 'tailwindcss';
-
-/* Design tokens are defined in phase 2. For now only the base surface. */
-@theme {
-  --font-sans: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
-}
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+@import './tokens.css';
 
 @layer base {
   html,
@@ -13,6 +11,38 @@
   }
 
   body {
-    @apply bg-stone-50 text-stone-800 antialiased;
+    @apply bg-surface font-sans text-ink antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+    transition: background-color 200ms var(--ease-out-soft), color 200ms var(--ease-out-soft);
+  }
+
+  /* Visible, high-contrast keyboard focus on every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--accent);
+  }
+
+  ::selection {
+    background: var(--primary-soft);
+    color: var(--primary-soft-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Frosted panel used for the main layout surfaces. */
+  .glass {
+    background: color-mix(in oklab, var(--surface-raised) 72%, transparent);
+    backdrop-filter: blur(20px) saturate(1.2);
+    border: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
   }
 }
