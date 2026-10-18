@@ -14,4 +14,4 @@ export function getBridge(): MudanzifyBridge | null {
   return window[BRIDGE_KEY] ?? null;
 }
 
-export type { AppInfo, MudanzifyBridge } from './contract';
+export type { AppInfo, MudanzifyBridge, ThemePreference, ThemeState } from './contract';
