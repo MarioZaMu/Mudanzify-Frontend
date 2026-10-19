@@ -1,7 +1,12 @@
 import {
+  Archive,
+  Code,
   Contact,
+  File,
   FileText,
+  Film,
   Folder,
+  Image,
   Package,
   PackageCheck,
   PackageOpen,
@@ -14,7 +19,16 @@ import { cn } from '@/lib/cn';
 import { ProgressBar } from './ProgressBar';
 import { RiskBadge, RiskLight, type RiskLevel } from './RiskBadge';
 
-export type BoxKind = 'folder' | 'spreadsheet' | 'contacts' | 'documents';
+export type BoxKind =
+  | 'folder'
+  | 'spreadsheet'
+  | 'contacts'
+  | 'documents'
+  | 'images'
+  | 'media'
+  | 'archives'
+  | 'code'
+  | 'other';
 export type BoxStatus = 'open' | 'labeled' | 'packed' | 'delivered';
 
 export interface DataBoxProps {
@@ -28,6 +42,8 @@ export interface DataBoxProps {
   sizeLabel: string;
   /** Packing progress from 0 to 100. */
   progress?: number;
+  /** Extra line under the counts, e.g. how many files need a review. */
+  note?: string;
   selected?: boolean;
   onSelect?: () => void;
 }
@@ -37,6 +53,11 @@ const KIND_ICONS: Record<BoxKind, LucideIcon> = {
   spreadsheet: Sheet,
   contacts: Contact,
   documents: FileText,
+  images: Image,
+  media: Film,
+  archives: Archive,
+  code: Code,
+  other: File,
 };
 
 const STATUS_ICONS: Record<BoxStatus, LucideIcon> = {
@@ -59,6 +80,7 @@ export function DataBox({
   itemCount,
   sizeLabel,
   progress,
+  note,
   selected = false,
   onSelect,
 }: DataBoxProps) {
@@ -110,6 +132,8 @@ export function DataBox({
         <span className="font-medium">{es.box.items(itemCount)}</span>
         <span className="text-box-ink-muted tabular-nums">{sizeLabel}</span>
       </p>
+
+      {note && <p className="-mt-3 text-xs font-medium text-box-ink-muted">{note}</p>}
 
       {progress !== undefined && (
         <ProgressBar value={progress} label={es.showcase.sections.boxes.progress} tone="box" />
