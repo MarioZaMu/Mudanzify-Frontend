@@ -16,7 +16,7 @@ src/
 │   └── ui/       componentes base del sistema de diseño
 ├── hooks/        lógica reutilizable (ej. consultas al backend)
 ├── i18n/es.ts    todos los textos visibles, en español
-├── screens/      onboarding, shell, inicio por rol, traspasos (origen, inventario, destino, entrevista y revisión IA) y sistema de diseño
+├── screens/      onboarding, shell, inicio por rol, traspasos (origen, inventario, destino, entrevista, revisión IA y traspaso) y sistema de diseño
 ├── session/      SessionProvider: presentación vista y rol (emisor o receptor)
 ├── styles/       tokens de diseño (tokens.css) y estilos base
 └── theme/        ThemeProvider: claro, oscuro o sistema
@@ -73,7 +73,18 @@ acompaña el análisis y el resultado se revisa en tres pestañas, sin scroll de
   accesibles por teclado y se puede volver a la sugerencia.
 
 El plan se confirma solo cuando todo está decidido; cambiar algo después pide confirmarlo otra vez.
-Todavía no se mueve ningún archivo: la ejecución llega en la fase 7.
+
+## Vista de traspaso, ejecución e informe (fase 7)
+
+Sexto paso, disponible con el plan confirmado:
+
+- **Tres paneles**: Origen (solo lectura), Plan de empaque (cada archivo por caja y en orden, con su acción:
+  copiar, copiar con cambios o fuera, y el motivo) y Destino (carpeta nueva y su estructura).
+- **Iniciar traspaso** pide confirmación. Mudanzify **solo copia**: el origen nunca se mueve, cambia ni borra.
+  Todo va a una carpeta nueva del destino (si existe, «(2)», «(3)»…), así nada se sobrescribe.
+- Durante la copia, una barra muestra el progreso y el archivo actual, y el plan marca lo procesado. Se puede cancelar.
+- **Informe**: totales, copias verificadas, errores y botones para abrir el informe HTML y la carpeta de destino.
+
 
 ## Instalación
 
