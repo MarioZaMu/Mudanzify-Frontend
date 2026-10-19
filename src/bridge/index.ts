@@ -16,6 +16,7 @@ export function getBridge(): MudanzifyBridge | null {
 
 export type {
   AppInfo,
+  ColumnProfile,
   MudanzifyBridge,
   OnboardingState,
   ThemePreference,
