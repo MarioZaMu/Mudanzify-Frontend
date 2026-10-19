@@ -19,8 +19,8 @@ export function OverviewSection() {
         </h1>
         <p className="max-w-xl text-lg text-ink-muted">{t.intro}</p>
       </div>
-      <div className="hidden rounded-panel bg-surface-inverse p-10 lg:block">
-        <LogoMark className="size-36" />
+      <div className="hidden lg:block">
+        <LogoMark className="size-64 drop-shadow-xl" />
       </div>
     </section>
   );
