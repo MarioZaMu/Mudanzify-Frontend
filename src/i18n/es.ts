@@ -251,7 +251,9 @@ export const es = {
       restart: 'Repetir entrevista',
       restartTitle: '¿Repetir la entrevista?',
       restartBody: 'Se borrarán tus respuestas y los criterios de este traspaso. Tus archivos no se tocan.',
-      error: 'La IA no respondió. Revisa tu conexión o la API key en .env e inténtalo de nuevo.',
+      error: 'La IA no respondió. Revisa tu conexión a internet e inténtalo de nuevo.',
+      errorLimit: 'Llegaste al límite gratuito de Gemini por ahora. Espera un minuto (o hasta mañana si fue el límite diario) e inténtalo de nuevo.',
+      errorAuth: 'Gemini rechazó la API key. Revisa GEMINI_API_KEY en el archivo .env del backend y reinicia la app.',
     },
   },
   roles: {

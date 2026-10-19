@@ -103,7 +103,11 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
             ? es.transfers.errors.scan
             : transfer.error === 'ai'
               ? es.workspace.interview.error
-              : es.transfers.errors.generic}
+              : transfer.error === 'ai-limit'
+                ? es.workspace.interview.errorLimit
+                : transfer.error === 'ai-auth'
+                  ? es.workspace.interview.errorAuth
+                  : es.transfers.errors.generic}
         </Alert>
       )}
 
