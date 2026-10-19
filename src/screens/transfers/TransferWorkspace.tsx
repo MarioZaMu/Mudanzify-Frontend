@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { useTransfer } from '@/hooks/useTransfer';
 import { es } from '@/i18n/es';
 import { DestinationStep } from './DestinationStep';
+import { InterviewStep } from './interview/InterviewStep';
 import { InventoryStep } from './InventoryStep';
 import { OriginStep } from './OriginStep';
 import { ScanOverlay } from './ScanOverlay';
@@ -18,12 +19,17 @@ interface TransferWorkspaceProps {
 
 /** Resumes a draft on the furthest step it already reached. */
 function initialStep(draft: TransferDraft): WorkspaceStep {
+  if (draft.inventory && draft.interview) return 'interview';
   if (draft.inventory && draft.destination) return 'destination';
   if (draft.inventory) return 'inventory';
   return 'origin';
 }
 
-/** One transfer, one step per screen: Origen → Inventario → Destino. */
+/** Destination chosen and free of conflicts: the interview can start. */
+const destinationReady = (draft: TransferDraft) =>
+  draft.inventory !== null && draft.destination !== null && draft.destination.conflicts.length === 0;
+
+/** One transfer, one step per screen: Origen → Inventario → Destino → Entrevista IA. */
 export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
   const transfer = useTransfer(id);
   const { draft } = transfer;
@@ -37,6 +43,7 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
   // Changing the sources clears the inventory, so later steps go back to origin.
   useEffect(() => {
     if (draft && !draft.inventory && step !== 'origin' && step !== null) setStep('origin');
+    else if (draft && step === 'interview' && !draft.interview && !destinationReady(draft)) setStep('destination');
   }, [draft, step]);
 
   const goTo = (next: WorkspaceStep) => {
@@ -75,18 +82,28 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
         <WorkspaceStepper
           active={step}
           onSelect={goTo}
-          available={{ origin: true, inventory: hasInventory, destination: hasInventory }}
+          available={{
+            origin: true,
+            inventory: hasInventory,
+            destination: hasInventory,
+            interview: destinationReady(draft) || draft.interview !== null,
+          }}
           completed={{
             origin: hasInventory,
             inventory: hasInventory && draft.destination !== null,
-            destination: draft.destination !== null && draft.destination.conflicts.length === 0,
+            destination: destinationReady(draft),
+            interview: draft.interview?.status === 'done',
           }}
         />
       </header>
 
       {transfer.error && (
         <Alert tone="danger">
-          {transfer.error === 'scan' ? es.transfers.errors.scan : es.transfers.errors.generic}
+          {transfer.error === 'scan'
+            ? es.transfers.errors.scan
+            : transfer.error === 'ai'
+              ? es.workspace.interview.error
+              : es.transfers.errors.generic}
         </Alert>
       )}
 
@@ -116,6 +133,19 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
             draft={draft}
             busy={transfer.task === 'destination'}
             onPick={() => void transfer.pickDestination()}
+            onStartInterview={() => goTo('interview')}
+          />
+        )}
+        {step === 'interview' && (
+          <InterviewStep
+            interview={draft.interview}
+            thinking={transfer.task === 'interview'}
+            busy={busy}
+            onStart={() => void transfer.interview.start()}
+            onAnswer={(answer) => void transfer.interview.answer(answer)}
+            onReview={(suggestionId, decision) => void transfer.interview.review(suggestionId, decision)}
+            onFinish={() => void transfer.interview.finish()}
+            onRestart={() => void transfer.interview.reset()}
           />
         )}
       </div>

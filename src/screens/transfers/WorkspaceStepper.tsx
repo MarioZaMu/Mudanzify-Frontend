@@ -2,7 +2,7 @@ import { Check } from 'lucide-react';
 import { es } from '@/i18n/es';
 import { cn } from '@/lib/cn';
 
-export const WORKSPACE_STEPS = ['origin', 'inventory', 'destination'] as const;
+export const WORKSPACE_STEPS = ['origin', 'inventory', 'destination', 'interview'] as const;
 export type WorkspaceStep = (typeof WORKSPACE_STEPS)[number];
 
 interface WorkspaceStepperProps {
@@ -12,7 +12,7 @@ interface WorkspaceStepperProps {
   onSelect: (step: WorkspaceStep) => void;
 }
 
-/** Numbered pill steps: Origen → Inventario → Destino. */
+/** Numbered pill steps: Origen → Inventario → Destino → Entrevista IA. */
 export function WorkspaceStepper({ active, completed, available, onSelect }: WorkspaceStepperProps) {
   return (
     <nav aria-label={es.workspace.steps.label}>
