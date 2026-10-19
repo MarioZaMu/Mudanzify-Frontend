@@ -13,10 +13,11 @@ interface DestinationStepProps {
   draft: TransferDraft;
   busy: boolean;
   onPick: () => void;
+  onStartInterview: () => void;
 }
 
 /** Step 3: the sender picks where the data goes. Nothing is written yet. */
-export function DestinationStep({ draft, busy, onPick }: DestinationStepProps) {
+export function DestinationStep({ draft, busy, onPick, onStartInterview }: DestinationStepProps) {
   const { destination, inventory } = draft;
   const ready = destination !== null && inventory !== null && destination.conflicts.length === 0;
 
@@ -126,9 +127,15 @@ export function DestinationStep({ draft, busy, onPick }: DestinationStepProps) {
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-current/15 pt-4">
           <p className="text-sm font-medium">{t.ready.next}</p>
-          <Badge icon={Lock} tone={ready ? 'neutral' : 'inverse'}>
-            {t.ready.soon}
-          </Badge>
+          {ready ? (
+            <Button icon={Sparkles} onClick={onStartInterview}>
+              {t.ready.start}
+            </Button>
+          ) : (
+            <Badge icon={Lock} tone="inverse">
+              {t.ready.soon}
+            </Badge>
+          )}
         </div>
       </Card>
     </div>
