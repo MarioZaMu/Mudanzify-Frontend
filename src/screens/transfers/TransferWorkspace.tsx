@@ -5,6 +5,8 @@ import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { useTransfer } from '@/hooks/useTransfer';
 import { es } from '@/i18n/es';
+import { AnalysisOverlay } from './analysis/AnalysisOverlay';
+import { AnalysisStep } from './analysis/AnalysisStep';
 import { DestinationStep } from './DestinationStep';
 import { InterviewStep } from './interview/InterviewStep';
 import { InventoryStep } from './InventoryStep';
@@ -19,6 +21,7 @@ interface TransferWorkspaceProps {
 
 /** Resumes a draft on the furthest step it already reached. */
 function initialStep(draft: TransferDraft): WorkspaceStep {
+  if (draft.inventory && draft.analysis) return 'analysis';
   if (draft.inventory && draft.interview) return 'interview';
   if (draft.inventory && draft.destination) return 'destination';
   if (draft.inventory) return 'inventory';
@@ -29,7 +32,10 @@ function initialStep(draft: TransferDraft): WorkspaceStep {
 const destinationReady = (draft: TransferDraft) =>
   draft.inventory !== null && draft.destination !== null && draft.destination.conflicts.length === 0;
 
-/** One transfer, one step per screen: Origen → Inventario → Destino → Entrevista IA. */
+/** Criteria confirmed: the analysis can run. */
+const interviewDone = (draft: TransferDraft) => draft.interview?.status === 'done';
+
+/** One transfer, one step per screen: Origen → Inventario → Destino → Entrevista IA → Revisión IA. */
 export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
   const transfer = useTransfer(id);
   const { draft } = transfer;
@@ -44,6 +50,7 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
   useEffect(() => {
     if (draft && !draft.inventory && step !== 'origin' && step !== null) setStep('origin');
     else if (draft && step === 'interview' && !draft.interview && !destinationReady(draft)) setStep('destination');
+    else if (draft && step === 'analysis' && !draft.analysis && !interviewDone(draft)) setStep('interview');
   }, [draft, step]);
 
   const goTo = (next: WorkspaceStep) => {
@@ -87,12 +94,14 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
             inventory: hasInventory,
             destination: hasInventory,
             interview: destinationReady(draft) || draft.interview !== null,
+            analysis: interviewDone(draft) || draft.analysis !== null,
           }}
           completed={{
             origin: hasInventory,
             inventory: hasInventory && draft.destination !== null,
             destination: destinationReady(draft),
-            interview: draft.interview?.status === 'done',
+            interview: interviewDone(draft),
+            analysis: draft.analysis?.confirmed === true,
           }}
         />
       </header>
@@ -102,7 +111,9 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
           {transfer.error === 'scan'
             ? es.transfers.errors.scan
             : transfer.error === 'ai'
-              ? es.workspace.interview.error
+              ? step === 'analysis'
+                ? es.workspace.analysis.error
+                : es.workspace.interview.error
               : transfer.error === 'ai-limit'
                 ? es.workspace.interview.errorLimit
                 : transfer.error === 'ai-auth'
@@ -150,11 +161,27 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
             onReview={(suggestionId, decision) => void transfer.interview.review(suggestionId, decision)}
             onFinish={() => void transfer.interview.finish()}
             onRestart={() => void transfer.interview.reset()}
+            onNext={() => goTo('analysis')}
+          />
+        )}
+        {step === 'analysis' && draft.inventory && (
+          <AnalysisStep
+            analysis={draft.analysis}
+            inventory={draft.inventory}
+            running={transfer.task === 'analysis'}
+            busy={busy}
+            onRun={() => void transfer.analysis.run()}
+            onDecideFinding={(findingId, decision) => void transfer.analysis.decideFinding(findingId, decision)}
+            onReviewMapping={(mappingId, decision) => void transfer.analysis.reviewMapping(mappingId, decision)}
+            onSetPriority={(decision) => void transfer.analysis.setPriority(decision)}
+            onConfirm={() => void transfer.analysis.confirm()}
+            onRerun={() => void transfer.analysis.run()}
           />
         )}
       </div>
 
       {transfer.task === 'scan' && <ScanOverlay progress={transfer.progress} />}
+      {transfer.task === 'analysis' && <AnalysisOverlay progress={transfer.analysisProgress} />}
     </div>
   );
 }
