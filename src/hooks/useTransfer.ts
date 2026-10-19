@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   getBridge,
   type AnalysisProgress,
+  type ExecutionPlan,
+  type ExecutionProgress,
   type FindingDecision,
   type InterviewAnswerInput,
   type MappingDecision,
@@ -12,13 +14,14 @@ import {
   type TransferDraft,
 } from '@/bridge';
 
-export type TransferTask = 'sources' | 'destination' | 'scan' | 'rename' | 'interview' | 'review' | 'analysis' | 'decide';
-export type TransferError = 'generic' | 'scan' | 'ai' | 'ai-limit' | 'ai-auth';
+export type TransferTask = 'sources' | 'destination' | 'scan' | 'rename' | 'interview' | 'review' | 'analysis' | 'decide' | 'execute';
+export type TransferError = 'generic' | 'scan' | 'ai' | 'ai-limit' | 'ai-auth' | 'execute' | 'destination';
 
 /** The backend tags the two AI errors the user can fix (see ai/geminiClient.ts). */
 function classify(error: unknown, failure: TransferError): TransferError {
-  if (failure !== 'ai') return failure;
   const message = error instanceof Error ? error.message : '';
+  if (failure === 'execute') return message.includes('DESTINATION_UNAVAILABLE') ? 'destination' : 'execute';
+  if (failure !== 'ai') return failure;
   if (message.includes('AI_RATE_LIMIT')) return 'ai-limit';
   if (message.includes('AI_AUTH')) return 'ai-auth';
   return 'ai';
@@ -35,6 +38,9 @@ export function useTransfer(id: string) {
   const [error, setError] = useState<TransferError | null>(null);
   const [progress, setProgress] = useState<ScanProgress | null>(null);
   const [analysisProgress, setAnalysisProgress] = useState<AnalysisProgress | null>(null);
+  const [executionProgress, setExecutionProgress] = useState<ExecutionProgress | null>(null);
+  const [plan, setPlan] = useState<ExecutionPlan | null>(null);
+  const [planFailed, setPlanFailed] = useState(false);
   const taskRef = useRef<TransferTask | null>(null);
 
   useEffect(() => {
@@ -55,10 +61,14 @@ export function useTransfer(id: string) {
     const unsubscribeAnalysis = bridge.analysis.onProgress((update) => {
       if (update.transferId === id) setAnalysisProgress(update);
     });
+    const unsubscribeExecution = bridge.execution.onProgress((update) => {
+      if (update.transferId === id) setExecutionProgress(update);
+    });
     return () => {
       active = false;
       unsubscribeScan();
       unsubscribeAnalysis();
+      unsubscribeExecution();
     };
   }, [id]);
 
@@ -87,6 +97,7 @@ export function useTransfer(id: string) {
   const api = getBridge()?.transfers;
   const interviewApi = getBridge()?.interview;
   const analysisApi = getBridge()?.analysis;
+  const executionApi = getBridge()?.execution;
 
   const addSources = (kind: SourceKind) => api && run('sources', () => api.addSources(id, kind));
   const removeSource = (sourceId: string) => api && run('sources', () => api.removeSource(id, sourceId));
@@ -127,11 +138,41 @@ export function useTransfer(id: string) {
     reset: () => analysisApi && run('decide', () => analysisApi.reset(id)),
   };
 
+  const execution = {
+    /** Loads what will be copied; it writes nothing. */
+    preview: async () => {
+      if (!executionApi) return;
+      setPlanFailed(false);
+      try {
+        setPlan(await executionApi.preview(id));
+      } catch {
+        setPlan(null);
+        setPlanFailed(true);
+      }
+    },
+    start: async () => {
+      if (!executionApi) return null;
+      setExecutionProgress(null);
+      const next = await run('execute', () => executionApi.start(id), 'execute');
+      setExecutionProgress(null);
+      return next;
+    },
+    // Cancel goes around `run`: it must work while the copy is the running task.
+    cancel: () => executionApi?.cancel(id),
+    openOutput: () => executionApi?.openOutput(id).catch(() => setError('generic')),
+    openReport: () => executionApi?.openReport(id).catch(() => setError('generic')),
+    reset: () => executionApi && run('decide', () => executionApi.reset(id)),
+  };
+
   return {
     draft,
     interview,
     analysis,
     analysisProgress,
+    execution,
+    executionProgress,
+    plan,
+    planFailed,
     loadFailed,
     task,
     error,
