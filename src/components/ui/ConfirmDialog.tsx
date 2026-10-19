@@ -15,6 +15,8 @@ interface ConfirmDialogProps {
    * explicit, separate acknowledgement before the confirm button unlocks.
    */
   tone?: 'default' | 'danger';
+  /** Text of the danger checkbox; defaults to the irreversible-action wording. */
+  acknowledgement?: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -26,6 +28,7 @@ export function ConfirmDialog({
   description,
   confirmLabel = es.common.confirm,
   tone = 'default',
+  acknowledgement = es.dialog.irreversibleAck,
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
@@ -92,7 +95,7 @@ export function ConfirmDialog({
               onChange={(event) => setAcknowledged(event.target.checked)}
               className="mt-0.5 size-4 accent-current"
             />
-            {es.dialog.irreversibleAck}
+            {acknowledgement}
           </label>
         )}
 
