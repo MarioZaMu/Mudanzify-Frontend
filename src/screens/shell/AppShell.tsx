@@ -1,4 +1,4 @@
-import { Bell, Boxes, House, Palette, Search } from 'lucide-react';
+import { Bell, Boxes, House, Inbox, Palette, Search } from 'lucide-react';
 import { useState } from 'react';
 import type { UserRole } from '@/bridge';
 import { ConnectionBadge } from '@/components/ConnectionBadge';
@@ -9,19 +9,21 @@ import { useAppInfo } from '@/hooks/useAppInfo';
 import { es } from '@/i18n/es';
 import { DesignSystemView } from '@/screens/design-system/DesignSystemView';
 import { HomeView } from '@/screens/home/HomeView';
+import { ReceptionsSection } from '@/screens/receptions/ReceptionsSection';
 import { TransfersSection } from '@/screens/transfers/TransfersSection';
 import { useSession } from '@/session/SessionProvider';
 
-type ViewId = 'home' | 'transfers' | 'design-system';
+type ViewId = 'home' | 'transfers' | 'receptions' | 'design-system';
 
 const HOME_ITEM: NavItem = { id: 'home', label: es.nav.home, icon: House };
 const TRANSFERS_ITEM: NavItem = { id: 'transfers', label: es.nav.transfers, icon: Boxes };
+const RECEPTIONS_ITEM: NavItem = { id: 'receptions', label: es.nav.receptions, icon: Inbox };
 const DESIGN_ITEM: NavItem = { id: 'design-system', label: es.nav.designSystem, icon: Palette };
 
-/** The receiver module arrives in phase 8; until then only the sender packs. */
+/** The sender packs transfers; the receiver reviews what arrived. */
 const NAV_ITEMS: Record<UserRole, NavItem[]> = {
   sender: [HOME_ITEM, TRANSFERS_ITEM, DESIGN_ITEM],
-  receiver: [HOME_ITEM, DESIGN_ITEM],
+  receiver: [HOME_ITEM, RECEPTIONS_ITEM, DESIGN_ITEM],
 };
 
 /** Main layout after onboarding: persistent sidebar, one view at a time. */
@@ -60,10 +62,11 @@ export function AppShell({ role }: { role: UserRole }) {
               <HomeView
                 role={role}
                 onReplayOnboarding={() => void reopenOnboarding('start')}
-                onStart={() => setView('transfers')}
+                onStart={() => setView(role === 'sender' ? 'transfers' : 'receptions')}
               />
             )}
             {view === 'transfers' && <TransfersSection />}
+            {view === 'receptions' && <ReceptionsSection />}
             {view === 'design-system' && <DesignSystemView />}
           </div>
         </div>
