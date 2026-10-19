@@ -47,6 +47,17 @@ El emisor crea un traspaso y lo completa en tres pasos, cada uno en su propia pa
 
 En esta fase no se mueve, copia ni borra ningún archivo. Eliminar un traspaso borra solo su registro.
 
+## Entrevista con la IA (fase 5)
+
+Cuarto paso del traspaso, disponible cuando el destino no tiene avisos:
+
+- La IA hace entre 3 y 6 preguntas, una a la vez, con respuestas rápidas, un campo libre y la opción de omitir.
+  Cada pregunta explica por qué se hace.
+- Al terminar resume lo que entendió y propone criterios (alcance, prioridad, duplicados, datos faltantes, datos sensibles).
+  Cada criterio se **acepta, edita o rechaza por separado**; al editar se conserva la propuesta original y se puede deshacer.
+- Confirmar los criterios pide una confirmación aparte. La IA nunca mueve datos ni elige el destino.
+- Una insignia indica siempre si responde la IA real (Claude) o el **modo demo** (sin API key).
+
 ## Instalación
 
 ```bash
