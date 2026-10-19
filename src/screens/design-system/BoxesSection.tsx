@@ -17,7 +17,7 @@ export function BoxesSection() {
 
   return (
     <ShowcaseSection id="boxes" title={t.title} description={t.description}>
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2">
         {SAMPLE_BOXES.map((box) => (
           <DataBox
             key={box.code}

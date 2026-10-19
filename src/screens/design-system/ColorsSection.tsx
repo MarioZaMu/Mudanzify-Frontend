@@ -35,7 +35,7 @@ export function ColorsSection() {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {SWATCHES.map(({ label, token, className }) => (
           <Card key={token} as="div" className="flex flex-col gap-3 p-3">
-            <span className={cn('h-20 rounded-2xl', className)} />
+            <span className={cn('h-14 rounded-2xl', className)} />
             <span className="flex flex-col px-1 pb-1">
               <span className="text-sm font-medium">{label}</span>
               <code className="font-mono text-xs text-ink-muted">{token}</code>
