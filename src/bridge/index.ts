@@ -16,6 +16,16 @@ export function getBridge(): MudanzifyBridge | null {
 
 export type {
   AnalysisProgress,
+  ExecutionPlan,
+  ExecutionProgress,
+  ExecutionStatus,
+  ItemResult,
+  ItemStatus,
+  PlanAction,
+  PlanItem,
+  SkipReason,
+  TableChange,
+  TransferExecution,
   ColumnMapping,
   ColumnSource,
   Finding,
