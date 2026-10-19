@@ -1,17 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   getBridge,
+  type AnalysisProgress,
+  type FindingDecision,
   type InterviewAnswerInput,
+  type MappingDecision,
+  type PriorityDecision,
   type ReviewDecision,
   type ScanProgress,
   type SourceKind,
   type TransferDraft,
 } from '@/bridge';
 
-export type TransferTask = 'sources' | 'destination' | 'scan' | 'rename' | 'interview' | 'review';
+export type TransferTask = 'sources' | 'destination' | 'scan' | 'rename' | 'interview' | 'review' | 'analysis' | 'decide';
 export type TransferError = 'generic' | 'scan' | 'ai' | 'ai-limit' | 'ai-auth';
 
-/** The backend tags the two AI errors the user can fix (see ai/gemini.ts). */
+/** The backend tags the two AI errors the user can fix (see ai/geminiClient.ts). */
 function classify(error: unknown, failure: TransferError): TransferError {
   if (failure !== 'ai') return failure;
   const message = error instanceof Error ? error.message : '';
@@ -30,6 +34,7 @@ export function useTransfer(id: string) {
   const [task, setTask] = useState<TransferTask | null>(null);
   const [error, setError] = useState<TransferError | null>(null);
   const [progress, setProgress] = useState<ScanProgress | null>(null);
+  const [analysisProgress, setAnalysisProgress] = useState<AnalysisProgress | null>(null);
   const taskRef = useRef<TransferTask | null>(null);
 
   useEffect(() => {
@@ -44,12 +49,16 @@ export function useTransfer(id: string) {
       .then((loaded) => active && setDraft(loaded))
       .catch(() => active && setLoadFailed(true));
 
-    const unsubscribe = bridge.transfers.onScanProgress((update) => {
+    const unsubscribeScan = bridge.transfers.onScanProgress((update) => {
       if (update.transferId === id) setProgress(update);
+    });
+    const unsubscribeAnalysis = bridge.analysis.onProgress((update) => {
+      if (update.transferId === id) setAnalysisProgress(update);
     });
     return () => {
       active = false;
-      unsubscribe();
+      unsubscribeScan();
+      unsubscribeAnalysis();
     };
   }, [id]);
 
@@ -77,6 +86,7 @@ export function useTransfer(id: string) {
 
   const api = getBridge()?.transfers;
   const interviewApi = getBridge()?.interview;
+  const analysisApi = getBridge()?.analysis;
 
   const addSources = (kind: SourceKind) => api && run('sources', () => api.addSources(id, kind));
   const removeSource = (sourceId: string) => api && run('sources', () => api.removeSource(id, sourceId));
@@ -100,9 +110,28 @@ export function useTransfer(id: string) {
     reset: () => interviewApi && run('review', () => interviewApi.reset(id)),
   };
 
+  const analysis = {
+    run: async () => {
+      if (!analysisApi) return null;
+      setAnalysisProgress(null);
+      const next = await run('analysis', () => analysisApi.run(id), 'ai');
+      setAnalysisProgress(null);
+      return next;
+    },
+    decideFinding: (findingId: string, decision: FindingDecision) =>
+      analysisApi && run('decide', () => analysisApi.decideFinding(id, findingId, decision)),
+    reviewMapping: (mappingId: string, decision: MappingDecision) =>
+      analysisApi && run('decide', () => analysisApi.reviewMapping(id, mappingId, decision)),
+    setPriority: (decision: PriorityDecision) => analysisApi && run('decide', () => analysisApi.setPriority(id, decision)),
+    confirm: () => analysisApi && run('decide', () => analysisApi.confirm(id)),
+    reset: () => analysisApi && run('decide', () => analysisApi.reset(id)),
+  };
+
   return {
     draft,
     interview,
+    analysis,
+    analysisProgress,
     loadFailed,
     task,
     error,
