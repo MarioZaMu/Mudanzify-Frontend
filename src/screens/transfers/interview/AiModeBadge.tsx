@@ -9,7 +9,7 @@ const t = es.workspace.interview.mode;
 export function AiModeBadge({ mode, model }: { mode: AiMode; model: string | null }) {
   return mode === 'ai' ? (
     <Badge tone="primary" icon={Sparkles}>
-      {t.ai(model ?? 'Claude')}
+      {t.ai(model ?? 'Gemini')}
     </Badge>
   ) : (
     <span title={t.demoHint}>
