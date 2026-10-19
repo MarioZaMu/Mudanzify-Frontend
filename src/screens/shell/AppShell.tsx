@@ -1,10 +1,9 @@
-import { Bell, Boxes, House, Inbox, Palette, Search } from 'lucide-react';
+import { Boxes, House, Inbox, Palette } from 'lucide-react';
 import { useState } from 'react';
 import type { UserRole } from '@/bridge';
 import { ConnectionBadge } from '@/components/ConnectionBadge';
 import { RoleProfile } from '@/components/layout/RoleProfile';
 import { Sidebar, type NavItem } from '@/components/layout/Sidebar';
-import { IconButton } from '@/components/ui/IconButton';
 import { useAppInfo } from '@/hooks/useAppInfo';
 import { es } from '@/i18n/es';
 import { DesignSystemView } from '@/screens/design-system/DesignSystemView';
@@ -31,7 +30,6 @@ export function AppShell({ role }: { role: UserRole }) {
   const appInfo = useAppInfo();
   const { reopenOnboarding } = useSession();
   const [view, setView] = useState<ViewId>('home');
-  const labels = es.showcase.sections.buttons.iconLabels;
 
   const footer = (
     <>
@@ -51,13 +49,11 @@ export function AppShell({ role }: { role: UserRole }) {
       <main className="glass flex min-w-0 flex-1 flex-col rounded-panel">
         <div className="flex items-center justify-end gap-3 px-10 pt-8">
           <ConnectionBadge state={appInfo} />
-          <IconButton icon={Search} label={labels.search} variant="inverse" />
-          <IconButton icon={Bell} label={labels.notifications} variant="inverse" />
         </div>
 
         {/* The key remounts the view so its entrance animation replays. */}
         <div className="min-h-0 flex-1 overflow-y-auto">
-          <div key={view} className="mx-auto h-full max-w-6xl px-10 pt-4 pb-10">
+          <div key={view} className="@container mx-auto h-full max-w-6xl px-10 pt-4 pb-10">
             {view === 'home' && (
               <HomeView
                 role={role}
