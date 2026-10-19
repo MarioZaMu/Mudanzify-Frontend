@@ -66,6 +66,7 @@ export const es = {
   roles: {
     sender: 'Emisor',
     receiver: 'Receptor',
+    label: 'Tu rol',
     change: 'Cambiar rol',
   },
   onboarding: {
