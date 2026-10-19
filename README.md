@@ -16,7 +16,8 @@ src/
 │   └── ui/       componentes base del sistema de diseño
 ├── hooks/        lógica reutilizable (ej. consultas al backend)
 ├── i18n/es.ts    todos los textos visibles, en español
-├── screens/      pantallas (por ahora, la muestra del sistema de diseño)
+├── screens/      onboarding, shell (barra lateral), inicio por rol y sistema de diseño
+├── session/      SessionProvider: presentación vista y rol (emisor o receptor)
 ├── styles/       tokens de diseño (tokens.css) y estilos base
 └── theme/        ThemeProvider: claro, oscuro o sistema
 ```
