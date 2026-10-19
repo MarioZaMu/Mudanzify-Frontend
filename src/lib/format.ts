@@ -1,4 +1,4 @@
-const numberFormat = new Intl.NumberFormat('es', { useGrouping: true });
+const numberFormat = new Intl.NumberFormat('es', { useGrouping: 'always' });
 const dateFormat = new Intl.DateTimeFormat('es', { day: 'numeric', month: 'short', year: 'numeric' });
 const relativeFormat = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
 
