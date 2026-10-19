@@ -8,6 +8,7 @@ import { es } from '@/i18n/es';
 import { AnalysisOverlay } from './analysis/AnalysisOverlay';
 import { AnalysisStep } from './analysis/AnalysisStep';
 import { DestinationStep } from './DestinationStep';
+import { ExecutionStep } from './execution/ExecutionStep';
 import { InterviewStep } from './interview/InterviewStep';
 import { InventoryStep } from './InventoryStep';
 import { OriginStep } from './OriginStep';
@@ -21,6 +22,7 @@ interface TransferWorkspaceProps {
 
 /** Resumes a draft on the furthest step it already reached. */
 function initialStep(draft: TransferDraft): WorkspaceStep {
+  if (draft.inventory && (draft.execution || draft.analysis?.confirmed)) return 'execution';
   if (draft.inventory && draft.analysis) return 'analysis';
   if (draft.inventory && draft.interview) return 'interview';
   if (draft.inventory && draft.destination) return 'destination';
@@ -35,7 +37,10 @@ const destinationReady = (draft: TransferDraft) =>
 /** Criteria confirmed: the analysis can run. */
 const interviewDone = (draft: TransferDraft) => draft.interview?.status === 'done';
 
-/** One transfer, one step per screen: Origen → Inventario → Destino → Entrevista IA → Revisión IA. */
+/** Plan confirmed: the copy can run. */
+const planConfirmed = (draft: TransferDraft) => draft.analysis?.confirmed === true;
+
+/** One transfer, one step per screen: Origen → Inventario → Destino → Entrevista IA → Revisión IA → Traspaso. */
 export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
   const transfer = useTransfer(id);
   const { draft } = transfer;
@@ -51,6 +56,7 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
     if (draft && !draft.inventory && step !== 'origin' && step !== null) setStep('origin');
     else if (draft && step === 'interview' && !draft.interview && !destinationReady(draft)) setStep('destination');
     else if (draft && step === 'analysis' && !draft.analysis && !interviewDone(draft)) setStep('interview');
+    else if (draft && step === 'execution' && !draft.execution && !planConfirmed(draft)) setStep('analysis');
   }, [draft, step]);
 
   const goTo = (next: WorkspaceStep) => {
@@ -95,13 +101,15 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
             destination: hasInventory,
             interview: destinationReady(draft) || draft.interview !== null,
             analysis: interviewDone(draft) || draft.analysis !== null,
+            execution: planConfirmed(draft) || draft.execution !== null,
           }}
           completed={{
             origin: hasInventory,
             inventory: hasInventory && draft.destination !== null,
             destination: destinationReady(draft),
             interview: interviewDone(draft),
-            analysis: draft.analysis?.confirmed === true,
+            analysis: planConfirmed(draft),
+            execution: draft.execution?.status === 'done',
           }}
         />
       </header>
@@ -110,7 +118,11 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
         <Alert tone="danger">
           {transfer.error === 'scan'
             ? es.transfers.errors.scan
-            : transfer.error === 'ai'
+            : transfer.error === 'execute'
+              ? es.workspace.execution.errors.generic
+              : transfer.error === 'destination'
+                ? es.workspace.execution.errors.destination
+                : transfer.error === 'ai'
               ? step === 'analysis'
                 ? es.workspace.analysis.error
                 : es.workspace.interview.error
@@ -176,6 +188,23 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
             onSetPriority={(decision) => void transfer.analysis.setPriority(decision)}
             onConfirm={() => void transfer.analysis.confirm()}
             onRerun={() => void transfer.analysis.run()}
+            onNext={() => goTo('execution')}
+          />
+        )}
+        {step === 'execution' && draft.inventory && (
+          <ExecutionStep
+            draft={draft}
+            plan={transfer.plan}
+            planFailed={transfer.planFailed}
+            running={transfer.task === 'execute'}
+            busy={busy}
+            progress={transfer.executionProgress}
+            onPreview={() => void transfer.execution.preview()}
+            onStart={() => void transfer.execution.start()}
+            onCancel={() => void transfer.execution.cancel()}
+            onOpenReport={() => void transfer.execution.openReport()}
+            onOpenFolder={() => void transfer.execution.openOutput()}
+            onAgain={() => void transfer.execution.reset()}
           />
         )}
       </div>
