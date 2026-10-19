@@ -15,7 +15,7 @@ export function RoleProfile({ role, onChangeRole }: RoleProfileProps) {
   const Icon = ROLE_ICONS[role];
 
   return (
-    <div className="flex items-center gap-3 rounded-card bg-surface-sunken p-3">
+    <div className="flex items-center gap-2.5 rounded-card bg-surface-sunken p-3">
       <span className="grid size-11 shrink-0 place-items-center rounded-full bg-surface-inverse text-ink-inverse">
         <Icon aria-hidden size={18} />
       </span>
