@@ -15,6 +15,20 @@ export function getBridge(): MudanzifyBridge | null {
 }
 
 export type {
+  AnalysisProgress,
+  ColumnMapping,
+  ColumnSource,
+  Finding,
+  FindingChoice,
+  FindingDecision,
+  FindingKind,
+  FindingStatus,
+  MappingDecision,
+  PriorityDecision,
+  PriorityPlan,
+  SensitiveType,
+  TableRef,
+  TransferAnalysis,
   AppInfo,
   ColumnProfile,
   AiMode,
@@ -48,4 +62,4 @@ export type {
   TransferSource,
   TransferSummary,
 } from './contract';
-export { INTERVIEW_LIMITS } from './contract';
+export { FINDING_CHOICES, INTERVIEW_LIMITS } from './contract';
