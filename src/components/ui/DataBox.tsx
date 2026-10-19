@@ -50,7 +50,7 @@ export interface DataBoxProps {
   onSelect?: () => void;
 }
 
-const KIND_ICONS: Record<BoxKind, LucideIcon> = {
+export const KIND_ICONS: Record<BoxKind, LucideIcon> = {
   folder: Folder,
   spreadsheet: Sheet,
   contacts: Contact,
