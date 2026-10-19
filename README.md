@@ -56,7 +56,7 @@ Cuarto paso del traspaso, disponible cuando el destino no tiene avisos:
 - Al terminar resume lo que entendió y propone criterios (alcance, prioridad, duplicados, datos faltantes, datos sensibles).
   Cada criterio se **acepta, edita o rechaza por separado**; al editar se conserva la propuesta original y se puede deshacer.
 - Confirmar los criterios pide una confirmación aparte. La IA nunca mueve datos ni elige el destino.
-- Una insignia indica siempre si responde la IA real (Claude) o el **modo demo** (sin API key).
+- Una insignia indica siempre si responde la IA real (Google Gemini) o el **modo demo** (sin API key).
 
 ## Instalación
 
