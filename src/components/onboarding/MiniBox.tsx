@@ -9,14 +9,14 @@ interface MiniBoxProps {
   style?: CSSProperties;
 }
 
-/** Small decorative cardboard box used in the onboarding illustrations. */
+/** Small decorative cardboard box used in the onboarding illustrations. Callers position it (absolute/relative). */
 export function MiniBox({ icon: Icon, label, className, style }: MiniBoxProps) {
   return (
     <div
       aria-hidden
       style={style}
       className={cn(
-        'relative flex flex-col items-center justify-center gap-2 rounded-3xl bg-box text-box-ink shadow-lifted ring-1 ring-box-line',
+        'flex flex-col items-center justify-center gap-2 rounded-3xl bg-box text-box-ink shadow-lifted ring-1 ring-box-line',
         className,
       )}
     >
