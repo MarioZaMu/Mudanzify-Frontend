@@ -44,6 +44,8 @@ export interface DataBoxProps {
   progress?: number;
   /** Extra line under the counts, e.g. how many files need a review. */
   note?: string;
+  /** Tighter layout for dense grids such as the inventory. */
+  compact?: boolean;
   selected?: boolean;
   onSelect?: () => void;
 }
@@ -81,6 +83,7 @@ export function DataBox({
   sizeLabel,
   progress,
   note,
+  compact = false,
   selected = false,
   onSelect,
 }: DataBoxProps) {
@@ -91,7 +94,8 @@ export function DataBox({
   return (
     <article
       className={cn(
-        'group relative flex flex-col gap-5 overflow-hidden rounded-card bg-box p-5 pt-7 text-box-ink ring-1 ring-box-line',
+        'group relative flex flex-col overflow-hidden rounded-card bg-box text-box-ink ring-1 ring-box-line',
+        compact ? 'gap-3 p-4 pt-6' : 'gap-5 p-5 pt-7',
         'transition-[transform,box-shadow] duration-200 ease-out-soft',
         interactive && 'hover:-translate-y-0.5 hover:shadow-lifted',
         selected && 'ring-2 ring-ink',
@@ -101,13 +105,18 @@ export function DataBox({
       <span aria-hidden className="absolute inset-x-0 top-0 mx-auto h-4 w-20 rounded-b-md bg-box-tape/70" />
 
       <header className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <span className="grid size-11 place-items-center rounded-2xl bg-surface-raised/80 text-box-ink">
+        <div className="flex min-w-0 items-center gap-3">
+          <span
+            className={cn(
+              'grid shrink-0 place-items-center rounded-2xl bg-surface-raised/80 text-box-ink',
+              compact ? 'size-10' : 'size-11',
+            )}
+          >
             <KindIcon aria-hidden size={20} />
           </span>
-          <div className="flex flex-col">
+          <div className="flex min-w-0 flex-col">
             <span className="font-mono text-[0.7rem] font-medium tracking-wider text-box-ink-muted uppercase">
-              {es.box.kinds[kind]} · {code}
+              {compact ? es.box.code(code) : `${es.box.kinds[kind]} · ${code}`}
             </span>
             <h3 className="leading-tight font-semibold">
               {interactive ? (
@@ -125,7 +134,7 @@ export function DataBox({
             </h3>
           </div>
         </div>
-        <RiskLight level={risk} />
+        {!compact && <RiskLight level={risk} className="shrink-0" />}
       </header>
 
       <p className="flex gap-4 text-sm">
@@ -133,18 +142,21 @@ export function DataBox({
         <span className="text-box-ink-muted tabular-nums">{sizeLabel}</span>
       </p>
 
-      {note && <p className="-mt-3 text-xs font-medium text-box-ink-muted">{note}</p>}
+      {note && !compact && <p className="-mt-3 text-xs font-medium text-box-ink-muted">{note}</p>}
 
       {progress !== undefined && (
         <ProgressBar value={progress} label={es.showcase.sections.boxes.progress} tone="box" />
       )}
 
       <footer className="flex flex-wrap items-center gap-2">
-        <span className="inline-flex h-7 items-center gap-1.5 rounded-full bg-surface-raised/80 px-3 text-xs font-medium">
-          <StatusIcon aria-hidden size={14} />
-          {es.box.status[status]}
-        </span>
+        {!compact && (
+          <span className="inline-flex h-7 items-center gap-1.5 rounded-full bg-surface-raised/80 px-3 text-xs font-medium">
+            <StatusIcon aria-hidden size={14} />
+            {es.box.status[status]}
+          </span>
+        )}
         <RiskBadge level={risk} />
+        {note && compact && <span className="text-xs font-medium text-box-ink-muted">{note}</span>}
         {selected && <span className="sr-only">{es.box.selected}</span>}
       </footer>
     </article>

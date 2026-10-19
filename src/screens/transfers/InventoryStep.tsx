@@ -50,7 +50,7 @@ export function InventoryStep({ inventory, onNext }: InventoryStepProps) {
         </div>
       )}
 
-      <div className="grid min-h-0 flex-1 gap-5 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+      <div className="grid min-h-0 flex-1 gap-5 lg:grid-cols-2">
         <section aria-labelledby="inventory-boxes" className="flex min-h-0 flex-col gap-3">
           <header className="flex items-baseline justify-between gap-3">
             <h2 id="inventory-boxes" className="text-lg font-semibold">
@@ -66,6 +66,7 @@ export function InventoryStep({ inventory, onNext }: InventoryStepProps) {
                   name={es.box.kinds[CATEGORY_BOX_KIND[box.id]]}
                   kind={CATEGORY_BOX_KIND[box.id]}
                   status="open"
+                  compact
                   risk={box.risk}
                   itemCount={box.fileCount}
                   sizeLabel={formatBytes(box.bytes)}
