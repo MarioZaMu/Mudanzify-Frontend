@@ -13,10 +13,16 @@ export interface NavItem {
 interface SidebarProps {
   items: NavItem[];
   activeId: string;
+  onSelect: (id: string) => void;
   footer?: React.ReactNode;
 }
 
-export function Sidebar({ items, activeId, footer }: SidebarProps) {
+/** Height of a nav item (h-11) plus the list gap (gap-1), in px. */
+const ITEM_STRIDE = 48;
+
+export function Sidebar({ items, activeId, onSelect, footer }: SidebarProps) {
+  const activeIndex = Math.max(0, items.findIndex((item) => item.id === activeId));
+
   return (
     <aside className="glass flex w-60 shrink-0 flex-col gap-8 rounded-panel p-5">
       <div className="px-2 pt-1">
@@ -24,25 +30,30 @@ export function Sidebar({ items, activeId, footer }: SidebarProps) {
       </div>
 
       <nav aria-label={es.nav.label} className="flex-1">
-        <ul className="flex flex-col gap-1">
+        <ul className="relative flex flex-col gap-1">
+          {/* Active pill that slides between items instead of jumping. */}
+          <span
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-11 rounded-full bg-surface-inverse shadow-soft transition-transform duration-300 ease-out-soft"
+            style={{ transform: `translateY(${activeIndex * ITEM_STRIDE}px)` }}
+          />
           {items.map(({ id, label, icon: Icon }) => {
             const active = id === activeId;
             return (
-              <li key={id}>
-                <a
-                  href={`#${id}`}
-                  aria-current={active ? 'location' : undefined}
+              <li key={id} className="relative">
+                <button
+                  type="button"
+                  onClick={() => onSelect(id)}
+                  aria-current={active ? 'page' : undefined}
                   className={cn(
-                    'flex h-11 items-center gap-3 rounded-full px-4 text-sm font-medium',
-                    'transition-colors duration-150',
-                    active
-                      ? 'bg-surface-inverse text-ink-inverse shadow-soft'
-                      : 'text-ink-muted hover:bg-surface-sunken hover:text-ink',
+                    'flex h-11 w-full cursor-pointer items-center gap-3 rounded-full px-4 text-left text-sm font-medium',
+                    'transition-colors duration-200',
+                    active ? 'text-ink-inverse' : 'text-ink-muted hover:bg-surface-sunken hover:text-ink',
                   )}
                 >
                   <Icon aria-hidden size={18} strokeWidth={active ? 2.25 : 1.75} />
                   {label}
-                </a>
+                </button>
               </li>
             );
           })}
