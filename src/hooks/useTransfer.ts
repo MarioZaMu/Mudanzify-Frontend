@@ -1,7 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getBridge, type ScanProgress, type SourceKind, type TransferDraft } from '@/bridge';
+import {
+  getBridge,
+  type InterviewAnswerInput,
+  type ReviewDecision,
+  type ScanProgress,
+  type SourceKind,
+  type TransferDraft,
+} from '@/bridge';
 
-export type TransferTask = 'sources' | 'destination' | 'scan' | 'rename';
+export type TransferTask = 'sources' | 'destination' | 'scan' | 'rename' | 'interview' | 'review';
+export type TransferError = 'generic' | 'scan' | 'ai';
 
 /**
  * One transfer draft and the actions on it. Every action goes through the
@@ -11,7 +19,7 @@ export function useTransfer(id: string) {
   const [draft, setDraft] = useState<TransferDraft | null>(null);
   const [loadFailed, setLoadFailed] = useState(false);
   const [task, setTask] = useState<TransferTask | null>(null);
-  const [error, setError] = useState<'generic' | 'scan' | null>(null);
+  const [error, setError] = useState<TransferError | null>(null);
   const [progress, setProgress] = useState<ScanProgress | null>(null);
   const taskRef = useRef<TransferTask | null>(null);
 
@@ -38,7 +46,7 @@ export function useTransfer(id: string) {
 
   /** Runs one backend action at a time and keeps the latest draft. */
   const run = useCallback(
-    async (name: TransferTask, action: () => Promise<TransferDraft>, failure: 'generic' | 'scan' = 'generic') => {
+    async (name: TransferTask, action: () => Promise<TransferDraft>, failure: TransferError = 'generic') => {
       if (taskRef.current) return null;
       taskRef.current = name;
       setTask(name);
@@ -59,6 +67,7 @@ export function useTransfer(id: string) {
   );
 
   const api = getBridge()?.transfers;
+  const interviewApi = getBridge()?.interview;
 
   const addSources = (kind: SourceKind) => api && run('sources', () => api.addSources(id, kind));
   const removeSource = (sourceId: string) => api && run('sources', () => api.removeSource(id, sourceId));
@@ -72,8 +81,19 @@ export function useTransfer(id: string) {
     return next;
   };
 
+  const interview = {
+    start: () => interviewApi && run('interview', () => interviewApi.start(id), 'ai'),
+    answer: (answer: InterviewAnswerInput | null) =>
+      interviewApi && run('interview', () => interviewApi.answer(id, answer), 'ai'),
+    review: (suggestionId: string, decision: ReviewDecision) =>
+      interviewApi && run('review', () => interviewApi.review(id, suggestionId, decision)),
+    finish: () => interviewApi && run('review', () => interviewApi.finish(id)),
+    reset: () => interviewApi && run('review', () => interviewApi.reset(id)),
+  };
+
   return {
     draft,
+    interview,
     loadFailed,
     task,
     error,
