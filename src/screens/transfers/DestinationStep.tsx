@@ -104,8 +104,8 @@ export function DestinationStep({ draft, busy, onPick }: DestinationStepProps) {
           >
             <Sparkles aria-hidden size={22} />
           </span>
-          <h2 className="text-title">{t.ready.title}</h2>
-          <p className={ready ? 'opacity-80' : 'text-ink-muted'}>{t.ready.body}</p>
+          <h2 className="text-title">{ready ? t.ready.title : t.pending.title}</h2>
+          <p className={ready ? 'opacity-80' : 'text-ink-muted'}>{ready ? t.ready.body : t.pending.body}</p>
         </div>
 
         <dl className="flex flex-col gap-2 text-sm">
@@ -126,7 +126,9 @@ export function DestinationStep({ draft, busy, onPick }: DestinationStepProps) {
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-current/15 pt-4">
           <p className="text-sm font-medium">{t.ready.next}</p>
-          <Badge icon={Lock}>{t.ready.soon}</Badge>
+          <Badge icon={Lock} tone={ready ? 'neutral' : 'inverse'}>
+            {t.ready.soon}
+          </Badge>
         </div>
       </Card>
     </div>
