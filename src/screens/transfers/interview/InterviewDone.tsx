@@ -1,6 +1,5 @@
-import { CircleCheck, Lock, PartyPopper, RotateCcw } from 'lucide-react';
+import { ArrowRight, CircleCheck, PartyPopper, RotateCcw } from 'lucide-react';
 import type { TransferInterview } from '@/bridge';
-import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { es } from '@/i18n/es';
@@ -12,10 +11,12 @@ export function InterviewDone({
   interview,
   busy,
   onRestart,
+  onNext,
 }: {
   interview: TransferInterview;
   busy: boolean;
   onRestart: () => void;
+  onNext: () => void;
 }) {
   const applied = interview.suggestions.filter((s) => s.status === 'accepted' || s.status === 'edited');
   const discarded = interview.suggestions.length - applied.length;
@@ -58,9 +59,9 @@ export function InterviewDone({
       <Card variant="sunken" className="flex min-h-0 flex-col justify-between gap-6">
         <div className="flex flex-col gap-3">
           <p className="text-lg font-semibold">{t.done.next}</p>
-          <Badge icon={Lock} tone="inverse" className="w-fit">
-            {t.done.soon}
-          </Badge>
+          <Button icon={ArrowRight} iconPosition="end" disabled={busy} className="self-start" onClick={onNext}>
+            {t.done.continue}
+          </Button>
         </div>
         <Button variant="outline" icon={RotateCcw} disabled={busy} className="self-start" onClick={onRestart}>
           {t.restart}

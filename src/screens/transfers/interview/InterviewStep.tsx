@@ -24,6 +24,7 @@ interface InterviewStepProps {
   onReview: (suggestionId: string, decision: ReviewDecision) => void;
   onFinish: () => void;
   onRestart: () => void;
+  onNext: () => void;
 }
 
 /** Step 4: the AI asks, the sender answers, then reviews each proposed criterion. */
@@ -87,7 +88,7 @@ export function InterviewStep(props: InterviewStepProps) {
   } else {
     body = (
       <div className="min-h-0 flex-1">
-        <InterviewDone interview={interview} busy={busy} onRestart={() => setConfirming('restart')} />
+        <InterviewDone interview={interview} busy={busy} onRestart={() => setConfirming('restart')} onNext={props.onNext} />
       </div>
     );
   }
