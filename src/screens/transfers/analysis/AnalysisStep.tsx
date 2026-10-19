@@ -1,4 +1,4 @@
-import { CheckCheck, CircleCheck, Lock, RotateCcw, ScanSearch, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, CheckCheck, CircleCheck, RotateCcw, ScanSearch, ShieldCheck, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import type {
   FindingDecision,
@@ -35,6 +35,7 @@ interface AnalysisStepProps {
   onSetPriority: (decision: PriorityDecision) => void;
   onConfirm: () => void;
   onRerun: () => void;
+  onNext: () => void;
 }
 
 /** Step 5: local detection plus AI column mapping and priority, every item decided by the sender. */
@@ -113,9 +114,9 @@ export function AnalysisStep(props: AnalysisStepProps) {
                 </p>
                 <p className="text-sm opacity-80">{t.confirmedBody}</p>
                 <p className="text-sm font-medium">{t.next}</p>
-                <Badge icon={Lock} tone="accent" className="w-fit">
-                  {t.soon}
-                </Badge>
+                <Button icon={ArrowRight} iconPosition="end" disabled={busy} className="self-start" onClick={props.onNext}>
+                  {t.continue}
+                </Button>
               </div>
             ) : (
               <Badge tone={pending > 0 ? 'accent' : 'primary'} className="w-fit">
