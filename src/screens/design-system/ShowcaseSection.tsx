@@ -13,7 +13,7 @@ export function ShowcaseSection({ id, title, description, children }: ShowcaseSe
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className="flex scroll-mt-8 flex-col gap-6 animate-[rise-in_500ms_var(--ease-out-soft)_both]"
+      className="enter-stagger flex flex-col gap-6"
     >
       <div id={`${id}-title`}>
         <CardHeader title={title} description={description} />
