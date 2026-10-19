@@ -16,7 +16,7 @@ src/
 │   └── ui/       componentes base del sistema de diseño
 ├── hooks/        lógica reutilizable (ej. consultas al backend)
 ├── i18n/es.ts    todos los textos visibles, en español
-├── screens/      onboarding, shell (barra lateral), inicio por rol y sistema de diseño
+├── screens/      onboarding, shell, inicio por rol, traspasos (origen, inventario, destino) y sistema de diseño
 ├── session/      SessionProvider: presentación vista y rol (emisor o receptor)
 ├── styles/       tokens de diseño (tokens.css) y estilos base
 └── theme/        ThemeProvider: claro, oscuro o sistema
@@ -34,7 +34,18 @@ El código está en inglés y toda la interfaz visible en español: los textos s
 - **Contraste**: todos los textos cumplen WCAG AA (4.5:1) en modo claro y oscuro; las variantes `-ink` existen para eso.
 - **Tipografía**: Geist y Geist Mono, incluidas en la app (funciona sin internet). **Íconos**: lucide-react.
 - **Componentes** (`src/components/ui`): Button, IconButton, Card, Badge, ProgressBar, ThemeToggle,
-  RiskBadge / RiskLight, DataBox, AiSuggestion y ConfirmDialog.
+  RiskBadge / RiskLight, DataBox (con variante compacta), Alert, AiSuggestion y ConfirmDialog.
+
+## Traspasos (fase 4)
+
+El emisor crea un traspaso y lo completa en tres pasos, cada uno en su propia pantalla:
+
+1. **Origen**: agrega carpetas o archivos (Excel/CSV) con el diálogo nativo del sistema.
+2. **Inventario**: el backend lee el origen (solo lectura) y lo agrupa en cajas por tipo de archivo;
+   muestra archivos ocultos, temporales o vacíos y una vista previa de las tablas con sus columnas vacías.
+3. **Destino**: el emisor elige la carpeta; se revisa permiso de escritura, espacio libre y que no esté dentro del origen.
+
+En esta fase no se mueve, copia ni borra ningún archivo. Eliminar un traspaso borra solo su registro.
 
 ## Instalación
 
