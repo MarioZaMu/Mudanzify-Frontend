@@ -22,7 +22,7 @@ export function DestinationStep({ draft, busy, onPick, onStartInterview }: Desti
   const ready = destination !== null && inventory !== null && destination.conflicts.length === 0;
 
   return (
-    <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]">
+    <div className="grid h-full min-h-0 gap-6 @3xl:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]">
       <section className="flex min-h-0 flex-col gap-5">
         <header className="flex flex-col gap-2">
           <h2 className="text-title">{t.title}</h2>

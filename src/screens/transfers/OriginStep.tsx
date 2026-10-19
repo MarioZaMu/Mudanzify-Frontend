@@ -23,7 +23,7 @@ export function OriginStep({ draft, busy, onAdd, onRemove, onScan, onViewInvento
   const hasInventory = draft.inventory !== null;
 
   return (
-    <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+    <div className="grid h-full min-h-0 gap-6 @3xl:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
       <section className="flex flex-col gap-5">
         <header className="flex flex-col gap-2">
           <h2 className="text-title">{t.title}</h2>

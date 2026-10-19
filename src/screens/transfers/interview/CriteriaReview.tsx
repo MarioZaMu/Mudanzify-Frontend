@@ -24,7 +24,7 @@ export function CriteriaReview({ interview, busy, onReview, onConfirm, onRestart
   const pending = interview.suggestions.filter((suggestion) => suggestion.status === 'pending').length;
 
   return (
-    <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)]">
+    <div className="grid h-full min-h-0 gap-6 @3xl:grid-cols-[minmax(0,4fr)_minmax(0,7fr)]">
       <Card variant="inverse" as="section" className="flex min-h-0 flex-col gap-4 overflow-y-auto">
         <span className="grid size-12 place-items-center rounded-2xl bg-primary text-primary-ink">
           <Sparkles aria-hidden size={22} />

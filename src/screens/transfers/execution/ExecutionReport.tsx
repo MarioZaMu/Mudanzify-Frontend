@@ -42,7 +42,7 @@ export function ExecutionReport({ draft, execution, busy, onOpenReport, onOpenFo
   ];
 
   return (
-    <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
+    <div className="grid h-full min-h-0 gap-6 @3xl:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
       <Card as="section" className="flex min-h-0 flex-col gap-5">
         <header className="flex items-start gap-4">
           <span className={cn('grid size-12 shrink-0 place-items-center rounded-2xl', className)}>

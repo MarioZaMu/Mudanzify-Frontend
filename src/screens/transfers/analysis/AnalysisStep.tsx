@@ -90,7 +90,7 @@ export function AnalysisStep(props: AnalysisStepProps) {
   return (
     <div className="flex h-full min-h-0 flex-col gap-4">
       {header}
-      <div className="grid min-h-0 flex-1 gap-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)]">
+      <div className="grid min-h-0 flex-1 gap-6 @3xl:grid-cols-[minmax(0,4fr)_minmax(0,7fr)]">
         <Card variant="inverse" as="section" className="flex min-h-0 flex-col gap-4">
           <div className="flex min-h-0 flex-col gap-3 overflow-y-auto">
             <h2 className="flex items-center gap-3 text-xl font-semibold tracking-tight">

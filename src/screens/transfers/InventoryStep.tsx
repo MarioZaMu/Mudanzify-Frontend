@@ -50,7 +50,7 @@ export function InventoryStep({ inventory, onNext }: InventoryStepProps) {
         </div>
       )}
 
-      <div className="grid min-h-0 flex-1 gap-5 lg:grid-cols-2">
+      <div className="grid min-h-0 flex-1 gap-5 @3xl:grid-cols-2">
         <section aria-labelledby="inventory-boxes" className="flex min-h-0 flex-col gap-3">
           <header className="flex items-baseline justify-between gap-3">
             <h2 id="inventory-boxes" className="text-lg font-semibold">

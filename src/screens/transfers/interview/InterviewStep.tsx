@@ -68,7 +68,7 @@ export function InterviewStep(props: InterviewStepProps) {
     const open = interview.turns.at(-1);
     const question = open && open.answer === null ? open.question : null;
     body = (
-      <div className="grid min-h-0 flex-1 gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
+      <div className="grid min-h-0 flex-1 gap-6 @3xl:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
         <QuestionCard question={question} index={interview.turns.length} thinking={thinking} onAnswer={props.onAnswer} />
         <AnswerHistory turns={interview.turns} />
       </div>

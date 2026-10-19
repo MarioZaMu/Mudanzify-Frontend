@@ -73,7 +73,7 @@ export function ExecutionStep(props: ExecutionStepProps) {
 
   return (
     <div className="flex h-full min-h-0 flex-col gap-4">
-      <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[minmax(0,3fr)_minmax(0,5fr)_minmax(0,3fr)]">
+      <div className="grid min-h-0 flex-1 gap-4 @4xl:grid-cols-[minmax(0,3fr)_minmax(0,5fr)_minmax(0,3fr)]">
         <OriginPanel draft={draft} />
         <PlanPanel draft={draft} plan={plan} done={running ? (progress?.done ?? 0) : null} />
         <DestinationPanel draft={draft} plan={plan} />

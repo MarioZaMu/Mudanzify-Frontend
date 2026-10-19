@@ -37,7 +37,7 @@ export function VerifyStep({ reception, running, busy, progress, onVerify, onNex
   const percent = progress && progress.total > 0 ? (progress.done / progress.total) * 100 : 0;
 
   return (
-    <div className="grid h-full min-h-0 gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
+    <div className="grid h-full min-h-0 gap-6 @3xl:grid-cols-[minmax(0,7fr)_minmax(0,4fr)]">
       <Card as="section" className="flex min-h-0 flex-col gap-5">
         <header className="flex items-start gap-4">
           <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-primary-soft text-primary-soft-ink">
