@@ -16,7 +16,7 @@ src/
 │   └── ui/       componentes base del sistema de diseño
 ├── hooks/        lógica reutilizable (ej. consultas al backend)
 ├── i18n/es.ts    todos los textos visibles, en español
-├── screens/      onboarding, shell, inicio por rol, traspasos (origen, inventario, destino) y sistema de diseño
+├── screens/      onboarding, shell, inicio por rol, traspasos (origen, inventario, destino, entrevista y revisión IA) y sistema de diseño
 ├── session/      SessionProvider: presentación vista y rol (emisor o receptor)
 ├── styles/       tokens de diseño (tokens.css) y estilos base
 └── theme/        ThemeProvider: claro, oscuro o sistema
@@ -57,6 +57,23 @@ Cuarto paso del traspaso, disponible cuando el destino no tiene avisos:
   Cada criterio se **acepta, edita o rechaza por separado**; al editar se conserva la propuesta original y se puede deshacer.
 - Confirmar los criterios pide una confirmación aparte. La IA nunca mueve datos ni elige el destino.
 - Una insignia indica siempre si responde la IA real (Google Gemini) o el **modo demo** (sin API key).
+
+## Revisión con IA (fase 6)
+
+Quinto paso, disponible cuando los criterios de la entrevista están confirmados. Una barra de progreso
+acompaña el análisis y el resultado se revisa en tres pestañas, sin scroll de página:
+
+- **Hallazgos** (detectados en el equipo): archivos idénticos, filas repetidas, celdas vacías, columnas con
+  datos personales (correos, teléfonos, documentos, tarjetas) y archivos temporales, ocultos o vacíos.
+  Cada uno trae una sugerencia que sigue los criterios de la entrevista y se **acepta, cambia por otra opción
+  o deja tal cual**, con deshacer. Incluir datos personales sin enmascarar pide una confirmación roja aparte.
+- **Columnas**: la IA propone unificar columnas con el mismo dato y distinto nombre (ej. Teléfono y Celular);
+  cada propuesta se acepta, edita o rechaza.
+- **Prioridad**: orden en que se empacarán las cajas, con el motivo de cada una. Se reordena con flechas
+  accesibles por teclado y se puede volver a la sugerencia.
+
+El plan se confirma solo cuando todo está decidido; cambiar algo después pide confirmarlo otra vez.
+Todavía no se mueve ningún archivo: la ejecución llega en la fase 7.
 
 ## Instalación
 
