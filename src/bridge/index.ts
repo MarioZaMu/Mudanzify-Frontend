@@ -22,6 +22,7 @@ export type {
   CriterionSuggestion,
   CriterionTopic,
   InterviewAnswerInput,
+  InterviewQuestion,
   InterviewTurn,
   ReviewDecision,
   TransferInterview,
@@ -47,3 +48,4 @@ export type {
   TransferSource,
   TransferSummary,
 } from './contract';
+export { INTERVIEW_LIMITS } from './contract';
