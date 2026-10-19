@@ -86,6 +86,19 @@ Sexto paso, disponible con el plan confirmado:
 - **Informe**: totales, copias verificadas, errores y botones para abrir el informe HTML y la carpeta de destino.
 
 
+## Recepción (fase 8)
+
+Con el rol **Receptor**, la sección **Recepciones** lista las carpetas recibidas y permite abrir una nueva
+(«Abrir carpeta recibida», con diálogo nativo; si la carpeta no tiene `mudanzify.json` se explica el motivo).
+Cada recepción tiene tres pasos:
+
+- **Lo recibido**: las cajas que llegaron, estado del envío, criterios del emisor, tablas con cambios, archivos
+  excluidos a propósito y notas para revisar; botones para abrir el informe del emisor y la carpeta.
+- **Verificación**: compara la huella de cada archivo con la del envío (solo lectura), con progreso, resultado
+  por caja (color + icono + texto), archivos con problemas y archivos agregados después.
+- **Confirmar**: cada caja se acepta («Recibida conforme») o se reporta con un comentario, por separado y con
+  opción de deshacer. Al confirmar se guarda un «Acuse de recibo» en la carpeta; los archivos no cambian.
+
 ## Instalación
 
 ```bash
