@@ -37,7 +37,8 @@ export interface DataBoxProps {
   name: string;
   kind: BoxKind;
   status: BoxStatus;
-  risk: RiskLevel;
+  /** Omitted where risk does not apply, e.g. boxes that already arrived. */
+  risk?: RiskLevel;
   itemCount: number;
   sizeLabel: string;
   /** Packing progress from 0 to 100. */
@@ -134,7 +135,7 @@ export function DataBox({
             </h3>
           </div>
         </div>
-        {!compact && <RiskLight level={risk} className="shrink-0" />}
+        {!compact && risk && <RiskLight level={risk} className="shrink-0" />}
       </header>
 
       <p className="flex gap-4 text-sm">
@@ -155,7 +156,7 @@ export function DataBox({
             {es.box.status[status]}
           </span>
         )}
-        <RiskBadge level={risk} />
+        {risk && <RiskBadge level={risk} />}
         {note && compact && <span className="text-xs font-medium text-box-ink-muted">{note}</span>}
         {selected && <span className="sr-only">{es.box.selected}</span>}
       </footer>
