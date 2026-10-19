@@ -16,6 +16,14 @@ export function getBridge(): MudanzifyBridge | null {
 
 export type {
   AnalysisProgress,
+  BoxDecision,
+  BoxReview,
+  FileCheck,
+  ReceivedFile,
+  Reception,
+  ReceptionBox,
+  ReceptionSummary,
+  VerifyProgress,
   ExecutionPlan,
   ExecutionProgress,
   ExecutionStatus,
