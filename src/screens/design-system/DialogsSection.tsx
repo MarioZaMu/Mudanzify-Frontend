@@ -4,10 +4,10 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { ShowcaseSection } from './ShowcaseSection';
 
-const t = es.showcase.sections.dialogs;
+const t = strings.showcase.sections.dialogs;
 
 type OpenDialog = 'default' | 'danger' | null;
 type Result = 'confirmed' | 'cancelled' | null;

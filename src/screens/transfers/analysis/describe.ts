@@ -1,10 +1,10 @@
 import type { FileCategory, Finding, Inventory, TableRef } from '@/bridge';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { CATEGORY_BOX_KIND } from '../categories';
 
-const t = es.workspace.analysis.findings;
+const t = strings.workspace.analysis.findings;
 
-export const categoryName = (category: FileCategory) => es.box.kinds[CATEGORY_BOX_KIND[category]];
+export const categoryName = (category: FileCategory) => strings.box.kinds[CATEGORY_BOX_KIND[category]];
 
 export const fileName = (inventory: Inventory, fileId: string) =>
   inventory.files.find((file) => file.id === fileId)?.relativePath ?? fileId;

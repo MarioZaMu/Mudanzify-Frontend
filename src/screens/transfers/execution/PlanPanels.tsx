@@ -2,13 +2,13 @@ import { CircleCheck, Copy, FileText, Folder, FolderPlus, HardDrive, Lock, Minus
 import type { ExecutionPlan, PlanAction, PlanItem, TableChange, TransferDraft } from '@/bridge';
 import { Card } from '@/components/ui/Card';
 import { KIND_ICONS } from '@/components/ui/DataBox';
-import { es } from '@/i18n/es';
+import { getLanguage, strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { formatBytes } from '@/lib/format';
 import { categoryName, fileName } from '../analysis/describe';
 import { CATEGORY_BOX_KIND } from '../categories';
 
-const t = es.workspace.execution;
+const t = strings.workspace.execution;
 
 const ACTION_STYLE: Record<PlanAction, { icon: LucideIcon; className: string }> = {
   copy: { icon: Copy, className: 'bg-risk-safe-soft text-risk-safe-ink' },
@@ -155,7 +155,7 @@ export function DestinationPanel({ draft, plan }: { draft: TransferDraft; plan: 
         return parts.map((_, index) => parts.slice(0, index + 1).join('/'));
       }),
     ),
-  ].sort((a, b) => a.localeCompare(b, 'es'));
+  ].sort((a, b) => a.localeCompare(b, getLanguage()));
 
   return (
     <Card as="section" className="flex min-h-0 flex-col gap-4">

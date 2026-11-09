@@ -5,7 +5,7 @@ import { ConnectionBadge } from '@/components/ConnectionBadge';
 import { RoleProfile } from '@/components/layout/RoleProfile';
 import { Sidebar, type NavItem } from '@/components/layout/Sidebar';
 import { useAppInfo } from '@/hooks/useAppInfo';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { DesignSystemView } from '@/screens/design-system/DesignSystemView';
 import { HomeView } from '@/screens/home/HomeView';
 import { ReceptionsSection } from '@/screens/receptions/ReceptionsSection';
@@ -14,16 +14,16 @@ import { useSession } from '@/session/SessionProvider';
 
 type ViewId = 'home' | 'transfers' | 'receptions' | 'design-system';
 
-const HOME_ITEM: NavItem = { id: 'home', label: es.nav.home, icon: House };
-const TRANSFERS_ITEM: NavItem = { id: 'transfers', label: es.nav.transfers, icon: Boxes };
-const RECEPTIONS_ITEM: NavItem = { id: 'receptions', label: es.nav.receptions, icon: Inbox };
-const DESIGN_ITEM: NavItem = { id: 'design-system', label: es.nav.designSystem, icon: Palette };
-
-/** The sender packs transfers; the receiver reviews what arrived. */
-const NAV_ITEMS: Record<UserRole, NavItem[]> = {
-  sender: [HOME_ITEM, TRANSFERS_ITEM, DESIGN_ITEM],
-  receiver: [HOME_ITEM, RECEPTIONS_ITEM, DESIGN_ITEM],
-};
+/** The sender packs transfers; the receiver reviews what arrived. Built per render for the active language. */
+function navItems(role: UserRole): NavItem[] {
+  const home: NavItem = { id: 'home', label: strings.nav.home, icon: House };
+  const design: NavItem = { id: 'design-system', label: strings.nav.designSystem, icon: Palette };
+  const work: NavItem =
+    role === 'sender'
+      ? { id: 'transfers', label: strings.nav.transfers, icon: Boxes }
+      : { id: 'receptions', label: strings.nav.receptions, icon: Inbox };
+  return [home, work, design];
+}
 
 /** Main layout after onboarding: persistent sidebar, one view at a time. */
 export function AppShell({ role }: { role: UserRole }) {
@@ -44,7 +44,7 @@ export function AppShell({ role }: { role: UserRole }) {
 
   return (
     <div className="flex h-full gap-4 p-4">
-      <Sidebar items={NAV_ITEMS[role]} activeId={view} onSelect={(id) => setView(id as ViewId)} footer={footer} />
+      <Sidebar items={navItems(role)} activeId={view} onSelect={(id) => setView(id as ViewId)} footer={footer} />
 
       <main className="glass flex min-w-0 flex-1 flex-col rounded-panel">
         <div className="flex items-center justify-end gap-3 px-10 pt-8">

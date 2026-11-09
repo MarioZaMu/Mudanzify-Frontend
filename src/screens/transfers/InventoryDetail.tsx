@@ -1,12 +1,12 @@
 import { PackageOpen } from 'lucide-react';
 import type { FileCategory, Inventory, InventoryFile, SheetProfile } from '@/bridge';
 import { Card } from '@/components/ui/Card';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { formatBytes, formatNumber } from '@/lib/format';
 import { CATEGORY_BOX_KIND } from './categories';
 
-const t = es.workspace.inventory;
+const t = strings.workspace.inventory;
 
 /** Files rendered at once; the rest are summarized to keep the panel fast. */
 const MAX_LISTED_FILES = 60;
@@ -33,7 +33,7 @@ export function InventoryDetail({ inventory, category }: { inventory: Inventory;
     <Card
       key={category}
       as="section"
-      aria-label={es.box.kinds[CATEGORY_BOX_KIND[category]]}
+      aria-label={strings.box.kinds[CATEGORY_BOX_KIND[category]]}
       className="flex min-h-0 flex-col gap-5 overflow-y-auto animate-[rise-in_300ms_var(--ease-out-soft)_both]"
     >
       {tables.length > 0 && (

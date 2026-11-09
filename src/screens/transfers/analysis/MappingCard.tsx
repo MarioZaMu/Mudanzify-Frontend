@@ -3,10 +3,10 @@ import { useId, useState } from 'react';
 import type { ColumnMapping, Inventory, MappingDecision } from '@/bridge';
 import { AiSuggestion } from '@/components/ui/AiSuggestion';
 import { Button } from '@/components/ui/Button';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { tableName } from './describe';
 
-const t = es.workspace.analysis.mappings;
+const t = strings.workspace.analysis.mappings;
 
 interface MappingCardProps {
   mapping: ColumnMapping;
@@ -89,7 +89,7 @@ function EditMapping({
       </p>
       <div className="flex justify-end gap-2">
         <Button variant="ghost" icon={X} onClick={onCancel}>
-          {es.common.cancel}
+          {strings.common.cancel}
         </Button>
         <Button type="submit" icon={Save} disabled={disabled || name.trim() === ''}>
           {t.save}

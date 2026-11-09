@@ -4,9 +4,9 @@ import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { IconButton } from '@/components/ui/IconButton';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 
-const t = es.workspace.origin;
+const t = strings.workspace.origin;
 
 interface OriginStepProps {
   draft: TransferDraft;
@@ -32,7 +32,7 @@ export function OriginStep({ draft, busy, onAdd, onRemove, onScan, onViewInvento
         <ChoiceCard icon={FolderPlus} title={t.addFolder.title} body={t.addFolder.body} disabled={busy} onClick={() => onAdd('folder')} />
         <ChoiceCard icon={FilePlus2} title={t.addFiles.title} body={t.addFiles.body} disabled={busy} onClick={() => onAdd('file')} />
         <Alert tone="info" className="mt-auto">
-          {es.workspace.readOnlyNote}
+          {strings.workspace.readOnlyNote}
         </Alert>
       </section>
 

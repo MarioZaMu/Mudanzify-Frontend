@@ -4,12 +4,12 @@ import { Alert } from '@/components/ui/Alert';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { formatBytes, formatNumber } from '@/lib/format';
 import { fileName } from '../analysis/describe';
 
-const t = es.workspace.execution.report;
+const t = strings.workspace.execution.report;
 
 const HEADER: Record<TransferExecution['status'], { icon: LucideIcon; className: string }> = {
   running: { icon: CircleCheck, className: 'bg-primary-soft text-primary-soft-ink' },
@@ -91,7 +91,7 @@ export function ExecutionReport({ draft, execution, busy, onOpenReport, onOpenFo
 
       <Card variant="sunken" className="flex min-h-0 flex-col gap-5">
         <div className="flex flex-col gap-1">
-          <span className="text-xs text-ink-muted">{es.workspace.execution.panels.destination}</span>
+          <span className="text-xs text-ink-muted">{strings.workspace.execution.panels.destination}</span>
           <span className="font-mono text-sm break-all">{execution.outputPath}</span>
         </div>
         {!execution.reportPath && <Alert tone="warn">{t.noReport}</Alert>}

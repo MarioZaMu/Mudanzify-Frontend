@@ -19,6 +19,11 @@ export const es = {
     dark: 'Oscuro',
     system: 'Sistema',
   },
+  language: {
+    label: 'Idioma',
+    es: 'Español',
+    en: 'English',
+  },
   risk: {
     safe: { label: 'Seguro', description: 'Se puede traspasar sin problemas.' },
     warn: { label: 'Revisar', description: 'Hay algo que conviene revisar antes.' },

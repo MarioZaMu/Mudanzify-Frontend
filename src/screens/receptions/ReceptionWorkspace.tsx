@@ -5,12 +5,12 @@ import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { PillStepper } from '@/components/ui/PillStepper';
 import { useReception } from '@/hooks/useReception';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { ConfirmStep } from './ConfirmStep';
 import { ReceivedStep } from './ReceivedStep';
 import { VerifyStep } from './VerifyStep';
 
-const t = es.receptions;
+const t = strings.receptions;
 
 const RECEPTION_STEPS = ['received', 'verify', 'confirm'] as const;
 type ReceptionStep = (typeof RECEPTION_STEPS)[number];
@@ -49,7 +49,7 @@ export function ReceptionWorkspace({ id, onBack }: ReceptionWorkspaceProps) {
   }
 
   if (!current || !step) {
-    return <p className="text-ink-muted">{es.common.loading}</p>;
+    return <p className="text-ink-muted">{strings.common.loading}</p>;
   }
 
   const verified = current.verifiedAt !== null;

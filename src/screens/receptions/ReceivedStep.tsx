@@ -3,14 +3,14 @@ import type { ExecutionStatus, Reception, TableChange } from '@/bridge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { DataBox } from '@/components/ui/DataBox';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { formatBytes, formatDate } from '@/lib/format';
 import { categoryName } from '../transfers/analysis/describe';
 import { CATEGORY_BOX_KIND } from '../transfers/categories';
 
-const t = es.receptions.received;
-const c = es.receptions.confirm;
+const t = strings.receptions.received;
+const c = strings.receptions.confirm;
 
 const SEND_STATUS: Record<ExecutionStatus, { icon: LucideIcon; className: string }> = {
   running: { icon: CircleAlert, className: 'bg-risk-warn-soft text-risk-warn-ink' },

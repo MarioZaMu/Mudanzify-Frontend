@@ -14,10 +14,10 @@ import {
 } from "@/bridge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { es } from "@/i18n/es";
+import { strings } from '@/i18n';
 import { cn } from "@/lib/cn";
 
-const t = es.workspace.interview;
+const t = strings.workspace.interview;
 
 interface QuestionCardProps {
   question: InterviewQuestion | null;

@@ -2,9 +2,9 @@ import { ArrowRight, CircleCheck, PartyPopper, RotateCcw } from 'lucide-react';
 import type { TransferInterview } from '@/bridge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 
-const t = es.workspace.interview;
+const t = strings.workspace.interview;
 
 /** Final screen of the interview: the criteria the sender kept. */
 export function InterviewDone({

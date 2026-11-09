@@ -1,9 +1,9 @@
 import { FlaskConical, Sparkles } from 'lucide-react';
 import type { AiMode } from '@/bridge';
 import { Badge } from '@/components/ui/Badge';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 
-const t = es.workspace.interview.mode;
+const t = strings.workspace.interview.mode;
 
 /** Always tells the user whether the answers come from the real AI or the demo script. */
 export function AiModeBadge({ mode, model }: { mode: AiMode; model: string | null }) {

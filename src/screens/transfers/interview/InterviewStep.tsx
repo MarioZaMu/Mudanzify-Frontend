@@ -5,14 +5,14 @@ import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { useAiStatus } from '@/hooks/useAiStatus';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { AiModeBadge } from './AiModeBadge';
 import { AnswerHistory } from './AnswerHistory';
 import { CriteriaReview } from './CriteriaReview';
 import { InterviewDone } from './InterviewDone';
 import { QuestionCard } from './QuestionCard';
 
-const t = es.workspace.interview;
+const t = strings.workspace.interview;
 
 interface InterviewStepProps {
   interview: TransferInterview | null;

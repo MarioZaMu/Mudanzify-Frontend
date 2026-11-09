@@ -8,10 +8,10 @@ import { Card } from '@/components/ui/Card';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { IconButton } from '@/components/ui/IconButton';
 import { useTransfers } from '@/hooks/useTransfers';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { formatBytes, formatNumber, formatRelative } from '@/lib/format';
 
-const t = es.transfers;
+const t = strings.transfers;
 
 interface TransfersViewProps {
   onOpen: (id: string) => void;
@@ -55,7 +55,7 @@ export function TransfersView({ onOpen }: TransfersViewProps) {
       <header className="flex flex-wrap items-end justify-between gap-6">
         <div className="flex flex-col gap-3">
           <Badge tone="inverse" className="w-fit">
-            {es.nav.transfers}
+            {strings.nav.transfers}
           </Badge>
           <h1 className="text-display">{t.title}</h1>
           <p className="max-w-xl text-lg text-ink-muted">{t.intro}</p>
@@ -74,7 +74,7 @@ export function TransfersView({ onOpen }: TransfersViewProps) {
       <div className="flex min-h-0 flex-1 flex-col gap-4">
         {failed && <Alert tone="danger">{t.errors.generic}</Alert>}
         {state.status === 'browser-only' && (
-          <Alert tone="warn" title={es.connection.browserOnly}>
+          <Alert tone="warn" title={strings.connection.browserOnly}>
             {t.browserOnly}
           </Alert>
         )}
@@ -140,12 +140,12 @@ function TransferCard({
       <dl className="flex flex-col gap-2 text-sm">
         <div className="flex items-center gap-2">
           <FolderOpen aria-hidden size={16} className="text-ink-muted" />
-          <dt className="sr-only">{es.workspace.steps.origin}</dt>
+          <dt className="sr-only">{strings.workspace.steps.origin}</dt>
           <dd>{s.sources(item.sourceCount)}</dd>
         </div>
         <div className="flex items-center gap-2">
           <Boxes aria-hidden size={16} className="text-ink-muted" />
-          <dt className="sr-only">{es.workspace.steps.inventory}</dt>
+          <dt className="sr-only">{strings.workspace.steps.inventory}</dt>
           <dd>
             {item.fileCount === null
               ? s.noInventory
@@ -154,7 +154,7 @@ function TransferCard({
         </div>
         <div className="flex items-center gap-2">
           <MapPin aria-hidden size={16} className="text-ink-muted" />
-          <dt className="sr-only">{es.workspace.steps.destination}</dt>
+          <dt className="sr-only">{strings.workspace.steps.destination}</dt>
           <dd>{item.hasDestination ? s.destinationReady : s.destinationMissing}</dd>
         </div>
       </dl>

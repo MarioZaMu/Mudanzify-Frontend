@@ -1,13 +1,13 @@
 import { Monitor, Moon, Sun } from 'lucide-react';
 import type { ThemePreference } from '@/bridge';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { useTheme } from '@/theme/ThemeProvider';
 
-const OPTIONS = [
-  { value: 'light', icon: Sun, label: es.theme.light },
-  { value: 'dark', icon: Moon, label: es.theme.dark },
-  { value: 'system', icon: Monitor, label: es.theme.system },
+const options = () => [
+  { value: 'light', icon: Sun, label: strings.theme.light },
+  { value: 'dark', icon: Moon, label: strings.theme.dark },
+  { value: 'system', icon: Monitor, label: strings.theme.system },
 ] as const satisfies ReadonlyArray<{ value: ThemePreference; icon: unknown; label: string }>;
 
 /** Segmented control built on native radios, so arrow keys work out of the box. */
@@ -16,8 +16,8 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   return (
     <fieldset className={cn('flex rounded-full bg-surface-sunken p-1', className)}>
-      <legend className="sr-only">{es.theme.label}</legend>
-      {OPTIONS.map(({ value, icon: Icon, label }) => (
+      <legend className="sr-only">{strings.theme.label}</legend>
+      {options().map(({ value, icon: Icon, label }) => (
         <label
           key={value}
           title={label}

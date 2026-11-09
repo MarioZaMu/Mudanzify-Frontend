@@ -1,7 +1,7 @@
 import { Inbox, Repeat2, Send } from 'lucide-react';
 import type { UserRole } from '@/bridge';
 import { IconButton } from '@/components/ui/IconButton';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 
 const ROLE_ICONS = { sender: Send, receiver: Inbox } as const;
 
@@ -20,10 +20,10 @@ export function RoleProfile({ role, onChangeRole }: RoleProfileProps) {
         <Icon aria-hidden size={18} />
       </span>
       <div className="flex min-w-0 flex-1 flex-col">
-        <span className="text-xs text-ink-muted">{es.roles.label}</span>
-        <span className="truncate font-semibold">{es.roles[role]}</span>
+        <span className="text-xs text-ink-muted">{strings.roles.label}</span>
+        <span className="truncate font-semibold">{strings.roles[role]}</span>
       </div>
-      <IconButton icon={Repeat2} label={es.roles.change} variant="ghost" size="sm" onClick={onChangeRole} />
+      <IconButton icon={Repeat2} label={strings.roles.change} variant="ghost" size="sm" onClick={onChangeRole} />
     </div>
   );
 }

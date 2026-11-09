@@ -5,12 +5,12 @@ import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { formatBytes, formatDate } from '@/lib/format';
 import { categoryName } from '../transfers/analysis/describe';
 
-const t = es.receptions.confirm;
+const t = strings.receptions.confirm;
 
 interface ConfirmStepProps {
   reception: Reception;
@@ -100,7 +100,7 @@ function BoxReviewRow({ box, busy, onReview }: { box: ReceptionBox; busy: boolea
         <div className="flex min-w-0 flex-col gap-0.5">
           <span className="font-semibold">{categoryName(box.category)}</span>
           <span className="text-xs text-ink-muted">
-            {es.workspace.analysis.findings.files(box.files)} · {formatBytes(box.bytes)}
+            {strings.workspace.analysis.findings.files(box.files)} · {formatBytes(box.bytes)}
           </span>
           {issues}
         </div>
@@ -162,7 +162,7 @@ function BoxReviewRow({ box, busy, onReview }: { box: ReceptionBox; busy: boolea
           />
           <div className="flex justify-end gap-2">
             <Button size="sm" variant="ghost" icon={X} onClick={() => setReporting(false)}>
-              {es.common.cancel}
+              {strings.common.cancel}
             </Button>
             <Button size="sm" type="submit" icon={Save} disabled={busy || comment.trim() === ''}>
               {t.send}

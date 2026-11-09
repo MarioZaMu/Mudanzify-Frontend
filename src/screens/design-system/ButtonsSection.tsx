@@ -3,10 +3,10 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { IconButton } from '@/components/ui/IconButton';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { ShowcaseSection } from './ShowcaseSection';
 
-const t = es.showcase.sections.buttons;
+const t = strings.showcase.sections.buttons;
 
 export function ButtonsSection() {
   return (
@@ -45,8 +45,8 @@ export function ButtonsSection() {
           <IconButton icon={Ellipsis} label={t.iconLabels.more} />
           <IconButton icon={Ellipsis} label={t.iconLabels.more} variant="ghost" />
           <span className="mx-2 h-8 w-px bg-line" aria-hidden />
-          <Badge>{es.box.status.open}</Badge>
-          <Badge tone="primary">{es.ai.badge}</Badge>
+          <Badge>{strings.box.status.open}</Badge>
+          <Badge tone="primary">{strings.ai.badge}</Badge>
           <Badge tone="accent">+18</Badge>
           <Badge tone="inverse">v2</Badge>
         </div>

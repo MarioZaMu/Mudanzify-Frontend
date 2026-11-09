@@ -4,12 +4,12 @@ import type { FileCategory, Inventory } from '@/bridge';
 import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { DataBox } from '@/components/ui/DataBox';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { formatBytes, formatNumber } from '@/lib/format';
 import { CATEGORY_BOX_KIND } from './categories';
 import { InventoryDetail } from './InventoryDetail';
 
-const t = es.workspace.inventory;
+const t = strings.workspace.inventory;
 
 interface InventoryStepProps {
   inventory: Inventory;
@@ -63,7 +63,7 @@ export function InventoryStep({ inventory, onNext }: InventoryStepProps) {
               <li key={box.id}>
                 <DataBox
                   code={String(index + 1).padStart(2, '0')}
-                  name={es.box.kinds[CATEGORY_BOX_KIND[box.id]]}
+                  name={strings.box.kinds[CATEGORY_BOX_KIND[box.id]]}
                   kind={CATEGORY_BOX_KIND[box.id]}
                   status="open"
                   compact

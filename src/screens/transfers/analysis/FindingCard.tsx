@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { FINDING_CHOICES, type Finding, type FindingChoice, type FindingDecision, type Inventory } from '@/bridge';
 import { Button } from '@/components/ui/Button';
 import { RiskBadge } from '@/components/ui/RiskBadge';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { describeFinding } from './describe';
 
-const t = es.workspace.analysis.findings;
+const t = strings.workspace.analysis.findings;
 const MAX_FILES = 4;
 
 interface FindingCardProps {
@@ -95,7 +95,7 @@ export function FindingCard({ finding, inventory, disabled, onDecide, onIncludeS
             </p>
             <div className="flex flex-wrap gap-2">
               <Button size="sm" icon={Check} disabled={disabled} onClick={() => decide({ action: 'accept' }, finding.suggested)}>
-                {es.ai.accept}
+                {strings.ai.accept}
               </Button>
               <Button size="sm" variant="outline" icon={ListChecks} disabled={disabled} onClick={() => setChoosing(true)}>
                 {t.change}
@@ -121,7 +121,7 @@ export function FindingCard({ finding, inventory, disabled, onDecide, onIncludeS
               : t.statuses[finding.status](t.choices[finding.choice])}
           </span>
           <Button size="sm" variant="ghost" icon={Undo2} disabled={disabled} onClick={() => onDecide({ action: 'undo' })}>
-            {es.ai.undo}
+            {strings.ai.undo}
           </Button>
         </div>
       )}

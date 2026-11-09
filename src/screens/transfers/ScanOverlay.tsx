@@ -1,9 +1,9 @@
 import { PackageSearch } from 'lucide-react';
 import type { ScanProgress } from '@/bridge';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { formatBytes, formatNumber } from '@/lib/format';
 
-const t = es.workspace.scanning;
+const t = strings.workspace.scanning;
 
 /** Covers the workspace while the backend reads the sources. */
 export function ScanOverlay({ progress }: { progress: ScanProgress | null }) {

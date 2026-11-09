@@ -1,5 +1,5 @@
 import { PillStepper } from '@/components/ui/PillStepper';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 
 export const WORKSPACE_STEPS = ['origin', 'inventory', 'destination', 'interview', 'analysis', 'execution'] as const;
 export type WorkspaceStep = (typeof WORKSPACE_STEPS)[number];
@@ -13,5 +13,5 @@ interface WorkspaceStepperProps {
 
 /** Origen → Inventario → Destino → Entrevista IA → Revisión IA → Traspaso. */
 export function WorkspaceStepper(props: WorkspaceStepperProps) {
-  return <PillStepper steps={WORKSPACE_STEPS} labels={es.workspace.steps} label={es.workspace.steps.label} {...props} />;
+  return <PillStepper steps={WORKSPACE_STEPS} labels={strings.workspace.steps} label={strings.workspace.steps.label} {...props} />;
 }

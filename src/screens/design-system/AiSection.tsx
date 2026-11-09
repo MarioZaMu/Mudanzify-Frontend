@@ -1,8 +1,8 @@
 import { AiSuggestion } from '@/components/ui/AiSuggestion';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { ShowcaseSection } from './ShowcaseSection';
 
-const t = es.showcase.sections.ai;
+const t = strings.showcase.sections.ai;
 
 export function AiSection() {
   return (

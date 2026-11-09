@@ -4,12 +4,12 @@ import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { formatDate } from '@/lib/format';
 import { categoryName } from '../transfers/analysis/describe';
 
-const t = es.receptions.verify;
+const t = strings.receptions.verify;
 
 /** Never color alone: every check has its icon and its word. */
 export const CHECK_STYLE: Record<FileCheck, { icon: LucideIcon; className: string }> = {
@@ -120,7 +120,7 @@ export function VerifyStep({ reception, running, busy, progress, onVerify, onNex
           <section className="flex flex-col gap-2">
             <h3 className="font-semibold">{t.problems}</h3>
             {!verified ? (
-              <p className="text-sm text-ink-muted">{es.receptions.card.notVerified}</p>
+              <p className="text-sm text-ink-muted">{strings.receptions.card.notVerified}</p>
             ) : problems.length === 0 ? (
               <p className="flex items-center gap-2 text-sm text-risk-safe-ink">
                 <CircleCheck aria-hidden size={16} />

@@ -1,15 +1,17 @@
 import type { AppInfoState } from '@/hooks/useAppInfo';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 
-const VARIANTS = {
-  checking: { dot: 'bg-ink-muted animate-pulse', text: es.connection.checking },
-  connected: { dot: 'bg-risk-safe', text: es.connection.connected },
-  'browser-only': { dot: 'bg-risk-warn', text: es.connection.browserOnly },
-  error: { dot: 'bg-risk-danger', text: es.connection.error },
-} as const;
+/** Built on each render: the text depends on the active language. */
+const variants = () =>
+  ({
+  checking: { dot: 'bg-ink-muted animate-pulse', text: strings.connection.checking },
+  connected: { dot: 'bg-risk-safe', text: strings.connection.connected },
+  'browser-only': { dot: 'bg-risk-warn', text: strings.connection.browserOnly },
+  error: { dot: 'bg-risk-danger', text: strings.connection.error },
+  }) as const;
 
 export function ConnectionBadge({ state }: { state: AppInfoState }) {
-  const variant = VARIANTS[state.status];
+  const variant = variants()[state.status];
 
   return (
     <div

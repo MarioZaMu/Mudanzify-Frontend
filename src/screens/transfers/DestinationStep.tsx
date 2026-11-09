@@ -4,10 +4,10 @@ import { Alert } from '@/components/ui/Alert';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { formatBytes, formatNumber } from '@/lib/format';
 
-const t = es.workspace.destination;
+const t = strings.workspace.destination;
 
 interface DestinationStepProps {
   draft: TransferDraft;
@@ -110,18 +110,18 @@ export function DestinationStep({ draft, busy, onPick, onStartInterview }: Desti
         </div>
 
         <dl className="flex flex-col gap-2 text-sm">
-          <SummaryRow label={es.workspace.steps.origin} value={es.transfers.summary.sources(draft.sources.length)} />
+          <SummaryRow label={strings.workspace.steps.origin} value={strings.transfers.summary.sources(draft.sources.length)} />
           <SummaryRow
-            label={es.workspace.steps.inventory}
+            label={strings.workspace.steps.inventory}
             value={
               inventory
-                ? `${es.transfers.summary.files(formatNumber(inventory.totals.files))} · ${formatBytes(inventory.totals.bytes)}`
-                : es.transfers.summary.noInventory
+                ? `${strings.transfers.summary.files(formatNumber(inventory.totals.files))} · ${formatBytes(inventory.totals.bytes)}`
+                : strings.transfers.summary.noInventory
             }
           />
           <SummaryRow
-            label={es.workspace.steps.destination}
-            value={destination?.name ?? es.transfers.summary.destinationMissing}
+            label={strings.workspace.steps.destination}
+            value={destination?.name ?? strings.transfers.summary.destinationMissing}
           />
         </dl>
 

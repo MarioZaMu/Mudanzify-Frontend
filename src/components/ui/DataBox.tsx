@@ -14,7 +14,7 @@ import {
   Tag,
   type LucideIcon,
 } from 'lucide-react';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { ProgressBar } from './ProgressBar';
 import { RiskBadge, RiskLight, type RiskLevel } from './RiskBadge';
@@ -117,7 +117,7 @@ export function DataBox({
           </span>
           <div className="flex min-w-0 flex-col">
             <span className="font-mono text-[0.7rem] font-medium tracking-wider text-box-ink-muted uppercase">
-              {compact ? es.box.code(code) : `${es.box.kinds[kind]} · ${code}`}
+              {compact ? strings.box.code(code) : `${strings.box.kinds[kind]} · ${code}`}
             </span>
             <h3 className="leading-tight font-semibold">
               {interactive ? (
@@ -139,26 +139,26 @@ export function DataBox({
       </header>
 
       <p className="flex gap-4 text-sm">
-        <span className="font-medium">{es.box.items(itemCount)}</span>
+        <span className="font-medium">{strings.box.items(itemCount)}</span>
         <span className="text-box-ink-muted tabular-nums">{sizeLabel}</span>
       </p>
 
       {note && !compact && <p className="-mt-3 text-xs font-medium text-box-ink-muted">{note}</p>}
 
       {progress !== undefined && (
-        <ProgressBar value={progress} label={es.showcase.sections.boxes.progress} tone="box" />
+        <ProgressBar value={progress} label={strings.showcase.sections.boxes.progress} tone="box" />
       )}
 
       <footer className="flex flex-wrap items-center gap-2">
         {!compact && (
           <span className="inline-flex h-7 items-center gap-1.5 rounded-full bg-surface-raised/80 px-3 text-xs font-medium">
             <StatusIcon aria-hidden size={14} />
-            {es.box.status[status]}
+            {strings.box.status[status]}
           </span>
         )}
         {risk && <RiskBadge level={risk} />}
         {note && compact && <span className="text-xs font-medium text-box-ink-muted">{note}</span>}
-        {selected && <span className="sr-only">{es.box.selected}</span>}
+        {selected && <span className="sr-only">{strings.box.selected}</span>}
       </footer>
     </article>
   );

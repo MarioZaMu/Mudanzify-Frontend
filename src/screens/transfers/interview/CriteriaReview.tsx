@@ -6,9 +6,9 @@ import { AiSuggestion } from '@/components/ui/AiSuggestion';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 
-const t = es.workspace.interview;
+const t = strings.workspace.interview;
 
 interface CriteriaReviewProps {
   interview: TransferInterview;
@@ -151,7 +151,7 @@ function EditCriterion({
       </p>
       <div className="flex justify-end gap-2">
         <Button variant="ghost" icon={X} onClick={onCancel}>
-          {es.common.cancel}
+          {strings.common.cancel}
         </Button>
         <Button type="submit" icon={Save} disabled={busy || title.trim() === ''}>
           {t.edit.save}

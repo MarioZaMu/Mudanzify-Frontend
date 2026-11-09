@@ -1,6 +1,6 @@
 import { ShieldAlert, X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { Button } from './Button';
 import { IconButton } from './IconButton';
@@ -26,9 +26,9 @@ export function ConfirmDialog({
   open,
   title,
   description,
-  confirmLabel = es.common.confirm,
+  confirmLabel = strings.common.confirm,
   tone = 'default',
-  acknowledgement = es.dialog.irreversibleAck,
+  acknowledgement = strings.dialog.irreversibleAck,
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
@@ -80,7 +80,7 @@ export function ConfirmDialog({
               {title}
             </h2>
           </div>
-          <IconButton icon={X} label={es.common.close} variant="ghost" size="sm" onClick={onCancel} />
+          <IconButton icon={X} label={strings.common.close} variant="ghost" size="sm" onClick={onCancel} />
         </header>
 
         <p id={descriptionId} className="text-ink-muted">
@@ -101,7 +101,7 @@ export function ConfirmDialog({
 
         <footer className="flex justify-end gap-2">
           <Button variant="ghost" onClick={onCancel} autoFocus={isDanger}>
-            {es.common.cancel}
+            {strings.common.cancel}
           </Button>
           <Button
             variant={isDanger ? 'danger' : 'primary'}

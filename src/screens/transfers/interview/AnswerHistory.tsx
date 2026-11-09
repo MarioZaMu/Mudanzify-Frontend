@@ -1,9 +1,9 @@
 import { MessageSquareText } from 'lucide-react';
 import type { InterviewTurn } from '@/bridge';
 import { Card } from '@/components/ui/Card';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 
-const t = es.workspace.interview;
+const t = strings.workspace.interview;
 
 /** Questions already answered, newest last; the list scrolls inside the card. */
 export function AnswerHistory({ turns }: { turns: InterviewTurn[] }) {

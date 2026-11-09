@@ -14,13 +14,13 @@ import { Card } from '@/components/ui/Card';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { Tabs } from '@/components/ui/Tabs';
 import { useAiStatus } from '@/hooks/useAiStatus';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { AiModeBadge } from '../interview/AiModeBadge';
 import { FindingCard } from './FindingCard';
 import { MappingCard } from './MappingCard';
 import { PriorityList } from './PriorityList';
 
-const t = es.workspace.analysis;
+const t = strings.workspace.analysis;
 
 type Tab = 'findings' | 'mappings' | 'priority';
 

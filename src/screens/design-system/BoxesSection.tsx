@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { DataBox, type DataBoxProps } from '@/components/ui/DataBox';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { ShowcaseSection } from './ShowcaseSection';
 
-const t = es.showcase.sections.boxes;
+const t = strings.showcase.sections.boxes;
 
-const SAMPLE_BOXES: Array<Omit<DataBoxProps, 'selected' | 'onSelect'>> = [
+const sampleBoxes = (): Array<Omit<DataBoxProps, 'selected' | 'onSelect'>> => [
   { code: '01', name: t.samples.photos, kind: 'folder', status: 'open', risk: 'safe', itemCount: 1284, sizeLabel: '6,4 GB', progress: 20 },
   { code: '02', name: t.samples.clients, kind: 'spreadsheet', status: 'labeled', risk: 'warn', itemCount: 312, sizeLabel: '1,1 MB', progress: 55 },
   { code: '03', name: t.samples.contacts, kind: 'contacts', status: 'packed', risk: 'danger', itemCount: 48, sizeLabel: '96 KB', progress: 90 },
@@ -18,7 +18,7 @@ export function BoxesSection() {
   return (
     <ShowcaseSection id="boxes" title={t.title} description={t.description}>
       <div className="grid gap-4 md:grid-cols-2">
-        {SAMPLE_BOXES.map((box) => (
+        {sampleBoxes().map((box) => (
           <DataBox
             key={box.code}
             {...box}

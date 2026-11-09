@@ -4,11 +4,11 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { KIND_ICONS } from '@/components/ui/DataBox';
 import { IconButton } from '@/components/ui/IconButton';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { CATEGORY_BOX_KIND } from '../categories';
 import { categoryName } from './describe';
 
-const t = es.workspace.analysis.priority;
+const t = strings.workspace.analysis.priority;
 
 interface PriorityListProps {
   priority: PriorityPlan;

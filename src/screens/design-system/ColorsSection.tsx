@@ -1,11 +1,11 @@
 import { Card } from '@/components/ui/Card';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { ShowcaseSection } from './ShowcaseSection';
 
-const t = es.showcase.sections.colors;
+const t = strings.showcase.sections.colors;
 
-const SWATCHES = [
+const swatches = () => [
   { label: t.swatches.primary, token: 'primary', className: 'bg-primary' },
   { label: t.swatches.kraft, token: 'kraft-500', className: 'bg-kraft-500' },
   { label: t.swatches.accent, token: 'accent', className: 'bg-accent' },
@@ -33,7 +33,7 @@ export function ColorsSection() {
   return (
     <ShowcaseSection id="colors" title={t.title} description={t.description}>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {SWATCHES.map(({ label, token, className }) => (
+        {swatches().map(({ label, token, className }) => (
           <Card key={token} as="div" className="flex flex-col gap-3 p-3">
             <span className={cn('h-14 rounded-2xl', className)} />
             <span className="flex flex-col px-1 pb-1">

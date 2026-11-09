@@ -14,11 +14,11 @@ import {
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { LogoMark } from '@/components/brand/Logo';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { MiniBox } from './MiniBox';
 
-const t = es.onboarding;
+const t = strings.onboarding;
 
 /** Shared stage for every illustration. Purely decorative for screen readers. */
 function Stage({ children, className }: { children: ReactNode; className?: string }) {
@@ -69,7 +69,7 @@ export function PackArt() {
   );
 }
 
-const FINDINGS = [
+const findings = () => [
   { icon: Copy, label: t.review.findings.duplicates, tone: 'bg-risk-warn-soft text-risk-warn-ink', delay: '500ms' },
   { icon: CircleDashed, label: t.review.findings.gaps, tone: 'bg-risk-warn-soft text-risk-warn-ink', delay: '900ms' },
   { icon: ShieldAlert, label: t.review.findings.sensitive, tone: 'bg-risk-danger-soft text-risk-danger-ink', delay: '1300ms' },
@@ -97,7 +97,7 @@ export function ReviewArt() {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {FINDINGS.map(({ icon: Icon, label, tone, delay }) => (
+          {findings().map(({ icon: Icon, label, tone, delay }) => (
             <span
               key={label}
               className={cn('inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-semibold', tone)}

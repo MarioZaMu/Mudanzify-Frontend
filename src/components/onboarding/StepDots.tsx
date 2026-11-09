@@ -1,4 +1,4 @@
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 
 interface StepDotsProps {
@@ -18,7 +18,7 @@ export function StepDots({ total, current, onSelect }: StepDotsProps) {
             <button
               type="button"
               onClick={() => onSelect(index)}
-              aria-label={es.onboarding.progress(index + 1, total)}
+              aria-label={strings.onboarding.progress(index + 1, total)}
               aria-current={active ? 'step' : undefined}
               className={cn(
                 'block h-2 cursor-pointer rounded-full transition-all duration-300 ease-out-soft',

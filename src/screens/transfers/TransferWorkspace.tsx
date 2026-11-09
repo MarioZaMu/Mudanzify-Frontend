@@ -4,7 +4,7 @@ import type { TransferDraft } from '@/bridge';
 import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { useTransfer } from '@/hooks/useTransfer';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { AnalysisOverlay } from './analysis/AnalysisOverlay';
 import { AnalysisStep } from './analysis/AnalysisStep';
 import { DestinationStep } from './DestinationStep';
@@ -68,13 +68,13 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
     return (
       <div className="flex h-full flex-col gap-6">
         <BackButton onBack={onBack} />
-        <Alert tone="danger">{es.transfers.errors.load}</Alert>
+        <Alert tone="danger">{strings.transfers.errors.load}</Alert>
       </div>
     );
   }
 
   if (!draft || !step) {
-    return <p className="text-ink-muted">{es.common.loading}</p>;
+    return <p className="text-ink-muted">{strings.common.loading}</p>;
   }
 
   const hasInventory = draft.inventory !== null;
@@ -117,20 +117,20 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
       {transfer.error && (
         <Alert tone="danger">
           {transfer.error === 'scan'
-            ? es.transfers.errors.scan
+            ? strings.transfers.errors.scan
             : transfer.error === 'execute'
-              ? es.workspace.execution.errors.generic
+              ? strings.workspace.execution.errors.generic
               : transfer.error === 'destination'
-                ? es.workspace.execution.errors.destination
+                ? strings.workspace.execution.errors.destination
                 : transfer.error === 'ai'
               ? step === 'analysis'
-                ? es.workspace.analysis.error
-                : es.workspace.interview.error
+                ? strings.workspace.analysis.error
+                : strings.workspace.interview.error
               : transfer.error === 'ai-limit'
-                ? es.workspace.interview.errorLimit
+                ? strings.workspace.interview.errorLimit
                 : transfer.error === 'ai-auth'
-                  ? es.workspace.interview.errorAuth
-                  : es.transfers.errors.generic}
+                  ? strings.workspace.interview.errorAuth
+                  : strings.transfers.errors.generic}
         </Alert>
       )}
 
@@ -218,7 +218,7 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
 function BackButton({ onBack }: { onBack: () => void }) {
   return (
     <Button variant="ghost" size="sm" icon={ArrowLeft} onClick={onBack}>
-      {es.workspace.back}
+      {strings.workspace.back}
     </Button>
   );
 }
@@ -242,7 +242,7 @@ function TransferName({ name, disabled, onRename }: { name: string; disabled: bo
   return (
     <input
       ref={inputRef}
-      aria-label={es.workspace.nameLabel}
+      aria-label={strings.workspace.nameLabel}
       value={value}
       maxLength={80}
       disabled={disabled}

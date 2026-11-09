@@ -8,11 +8,11 @@ import { Card } from '@/components/ui/Card';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { IconButton } from '@/components/ui/IconButton';
 import { useReceptions } from '@/hooks/useReceptions';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { formatNumber, formatRelative } from '@/lib/format';
 
-const t = es.receptions;
+const t = strings.receptions;
 
 interface ReceptionsViewProps {
   onOpen: (id: string) => void;
@@ -57,7 +57,7 @@ export function ReceptionsView({ onOpen }: ReceptionsViewProps) {
       <header className="flex flex-wrap items-end justify-between gap-6">
         <div className="flex flex-col gap-3">
           <Badge tone="inverse" className="w-fit">
-            {es.nav.receptions}
+            {strings.nav.receptions}
           </Badge>
           <h1 className="text-display">{t.title}</h1>
           <p className="max-w-xl text-lg text-ink-muted">{t.intro}</p>
@@ -76,7 +76,7 @@ export function ReceptionsView({ onOpen }: ReceptionsViewProps) {
       <div className="flex min-h-0 flex-1 flex-col gap-4">
         {error && <Alert tone="danger">{t.errors[error]}</Alert>}
         {state.status === 'browser-only' && (
-          <Alert tone="warn" title={es.connection.browserOnly}>
+          <Alert tone="warn" title={strings.connection.browserOnly}>
             {t.browserOnly}
           </Alert>
         )}

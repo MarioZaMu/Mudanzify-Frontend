@@ -4,9 +4,9 @@ import { LogoMark } from "@/components/brand/Logo";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { es } from "@/i18n/es";
+import { strings } from '@/i18n';
 
-const t = es.home;
+const t = strings.home;
 
 interface HomeViewProps {
   role: UserRole;
@@ -22,7 +22,7 @@ export function HomeView({ role, onReplayOnboarding, onStart }: HomeViewProps) {
       <section className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
         <div className="flex flex-col gap-5">
           <Badge tone="inverse" className="w-fit">
-            {es.roles[role]}
+            {strings.roles[role]}
           </Badge>
           <h1 className="text-display">{t.title[role]}</h1>
           <p className="max-w-xl text-lg text-ink-muted">{t.intro[role]}</p>

@@ -1,6 +1,6 @@
 import { Check, Pencil, Sparkles, Undo2, X } from 'lucide-react';
 import { useState } from 'react';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 import { Button } from './Button';
 
@@ -23,11 +23,11 @@ interface AiSuggestionProps {
   onUndo?: () => void;
 }
 
-const DECIDED_LABELS: Record<Exclude<SuggestionDecision, 'pending'>, string> = {
-  accepted: es.ai.accepted,
-  edited: es.ai.edited,
-  rejected: es.ai.rejected,
-};
+const decidedLabels = (): Record<Exclude<SuggestionDecision, 'pending'>, string> => ({
+  accepted: strings.ai.accepted,
+  edited: strings.ai.edited,
+  rejected: strings.ai.rejected,
+});
 
 /**
  * A single AI proposal. Indigo marks it as coming from the AI, and the user
@@ -62,7 +62,7 @@ export function AiSuggestion({
     >
       <header className="flex items-center gap-2 text-sm font-semibold text-primary-soft-ink">
         <Sparkles aria-hidden size={16} />
-        {es.ai.badge}
+        {strings.ai.badge}
         {meta && <span className="font-medium opacity-80">· {meta}</span>}
       </header>
 
@@ -74,23 +74,23 @@ export function AiSuggestion({
       {decision === 'pending' ? (
         <div className="flex flex-wrap gap-2">
           <Button size="sm" icon={Check} disabled={disabled} onClick={() => decide('accepted', onAccept)}>
-            {es.ai.accept}
+            {strings.ai.accept}
           </Button>
           <Button size="sm" variant="outline" icon={Pencil} disabled={disabled} onClick={onEdit}>
-            {es.ai.edit}
+            {strings.ai.edit}
           </Button>
           <Button size="sm" variant="ghost" icon={X} disabled={disabled} onClick={() => decide('rejected', onReject)}>
-            {es.ai.reject}
+            {strings.ai.reject}
           </Button>
         </div>
       ) : (
         <div role="status" className="flex items-center justify-between gap-3 text-sm font-medium">
           <span className="flex items-center gap-2">
             {decision === 'rejected' ? <X aria-hidden size={16} /> : <Check aria-hidden size={16} />}
-            {DECIDED_LABELS[decision]}
+            {decidedLabels()[decision]}
           </span>
           <Button size="sm" variant="ghost" icon={Undo2} disabled={disabled} onClick={() => decide('pending', onUndo)}>
-            {es.ai.undo}
+            {strings.ai.undo}
           </Button>
         </div>
       )}

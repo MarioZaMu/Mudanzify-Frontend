@@ -7,10 +7,10 @@ import { RoleCard } from '@/components/onboarding/RoleCard';
 import { StepDots } from '@/components/onboarding/StepDots';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { useSession } from '@/session/SessionProvider';
 
-const t = es.onboarding;
+const t = strings.onboarding;
 
 interface IntroStep {
   id: 'welcome' | 'pack' | 'review' | 'deliver';
@@ -20,15 +20,16 @@ interface IntroStep {
   art: ComponentType;
 }
 
-const INTRO_STEPS: IntroStep[] = [
+const introSteps = (): IntroStep[] => [
   { id: 'welcome', ...t.welcome, art: WelcomeArt },
   { id: 'pack', ...t.pack, art: PackArt },
   { id: 'review', ...t.review, art: ReviewArt },
   { id: 'deliver', ...t.deliver, art: DeliverArt },
 ];
 
-const ROLE_STEP = INTRO_STEPS.length;
-const TOTAL_STEPS = INTRO_STEPS.length + 1;
+const INTRO_STEP_COUNT = 4;
+const ROLE_STEP = INTRO_STEP_COUNT;
+const TOTAL_STEPS = INTRO_STEP_COUNT + 1;
 
 /** True when a key event comes from a control that uses arrow keys itself. */
 const isOwnArrowTarget = (target: EventTarget | null) =>
@@ -80,7 +81,7 @@ export function OnboardingScreen() {
   };
 
   const isRoleStep = step === ROLE_STEP;
-  const intro = INTRO_STEPS[step];
+  const intro = introSteps()[step];
   const animation = direction === 'next' ? 'slide-in-next' : 'slide-in-prev';
 
   return (
@@ -120,7 +121,7 @@ export function OnboardingScreen() {
                 <RoleCard
                   value="sender"
                   icon={Send}
-                  roleName={es.roles.sender}
+                  roleName={strings.roles.sender}
                   {...t.role.sender}
                   checked={role === 'sender'}
                   onChange={setRole}
@@ -128,7 +129,7 @@ export function OnboardingScreen() {
                 <RoleCard
                   value="receiver"
                   icon={Inbox}
-                  roleName={es.roles.receiver}
+                  roleName={strings.roles.receiver}
                   {...t.role.receiver}
                   checked={role === 'receiver'}
                   onChange={setRole}
@@ -180,7 +181,7 @@ export function OnboardingScreen() {
                 onClick={finish}
                 title={role ? undefined : t.role.chooseFirst}
               >
-                {role ? t.role.continueAs(es.roles[role]) : t.role.chooseFirst}
+                {role ? t.role.continueAs(strings.roles[role]) : t.role.chooseFirst}
               </Button>
             ) : (
               <Button size="lg" icon={ArrowRight} iconPosition="end" onClick={() => goTo(step + 1)}>

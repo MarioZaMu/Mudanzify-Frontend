@@ -1,5 +1,5 @@
 import { ShieldAlert, ShieldCheck, TriangleAlert } from 'lucide-react';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 
 export type RiskLevel = 'safe' | 'warn' | 'danger';
@@ -16,7 +16,7 @@ const LEVELS = {
  */
 export function RiskBadge({ level, className }: { level: RiskLevel; className?: string }) {
   const { icon: Icon, className: tone } = LEVELS[level];
-  const { label, description } = es.risk[level];
+  const { label, description } = strings.risk[level];
 
   return (
     <span

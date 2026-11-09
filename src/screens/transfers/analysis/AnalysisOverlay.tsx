@@ -1,9 +1,9 @@
 import { ScanSearch } from 'lucide-react';
 import type { AnalysisProgress } from '@/bridge';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 
-const t = es.workspace.analysis.running;
+const t = strings.workspace.analysis.running;
 const PHASES: AnalysisProgress['phase'][] = ['hashing', 'tables', 'ai'];
 
 /** Covers the workspace while the files are checked locally and the AI prepares its suggestions. */

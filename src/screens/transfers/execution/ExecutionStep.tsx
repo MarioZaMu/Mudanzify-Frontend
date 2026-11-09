@@ -5,12 +5,12 @@ import { Alert } from '@/components/ui/Alert';
 import { Button } from '@/components/ui/Button';
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog';
 import { ProgressBar } from '@/components/ui/ProgressBar';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { formatBytes } from '@/lib/format';
 import { ExecutionReport } from './ExecutionReport';
 import { DestinationPanel, OriginPanel, PlanPanel } from './PlanPanels';
 
-const t = es.workspace.execution;
+const t = strings.workspace.execution;
 
 interface ExecutionStepProps {
   draft: TransferDraft;
