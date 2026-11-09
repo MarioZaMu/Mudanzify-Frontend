@@ -18,6 +18,7 @@ export type {
   AnalysisProgress,
   BoxDecision,
   BoxReview,
+  Language,
   FileCheck,
   ReceivedFile,
   Reception,
@@ -80,4 +81,4 @@ export type {
   TransferSource,
   TransferSummary,
 } from './contract';
-export { FINDING_CHOICES, INTERVIEW_LIMITS } from './contract';
+export { FINDING_CHOICES, INTERVIEW_LIMITS, LANGUAGES } from './contract';

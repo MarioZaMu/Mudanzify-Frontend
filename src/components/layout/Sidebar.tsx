@@ -1,7 +1,8 @@
 import type { LucideIcon } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
+import { LanguageToggle } from '@/components/ui/LanguageToggle';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
-import { es } from '@/i18n/es';
+import { strings } from '@/i18n';
 import { cn } from '@/lib/cn';
 
 export interface NavItem {
@@ -29,7 +30,7 @@ export function Sidebar({ items, activeId, onSelect, footer }: SidebarProps) {
         <Logo />
       </div>
 
-      <nav aria-label={es.nav.label} className="flex-1">
+      <nav aria-label={strings.nav.label} className="flex-1">
         <ul className="relative flex flex-col gap-1">
           {/* Active pill that slides between items instead of jumping. */}
           <span
@@ -62,6 +63,7 @@ export function Sidebar({ items, activeId, onSelect, footer }: SidebarProps) {
 
       <div className="flex flex-col gap-4">
         <ThemeToggle />
+        <LanguageToggle />
         {footer}
       </div>
     </aside>

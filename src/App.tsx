@@ -2,10 +2,13 @@ import { LogoMark } from '@/components/brand/Logo';
 import { OnboardingScreen } from '@/screens/onboarding/OnboardingScreen';
 import { AppShell } from '@/screens/shell/AppShell';
 import { SessionProvider, useSession } from '@/session/SessionProvider';
+import { LanguageProvider, useLanguage } from '@/language/LanguageProvider';
 import { ThemeProvider } from '@/theme/ThemeProvider';
 
 function Root() {
   const { status, onboarding } = useSession();
+  // Subscribing here re-renders the whole tree when the language changes.
+  useLanguage();
 
   if (status === 'loading') {
     return (
@@ -22,9 +25,11 @@ function Root() {
 export function App() {
   return (
     <ThemeProvider>
-      <SessionProvider>
-        <Root />
-      </SessionProvider>
+      <LanguageProvider>
+        <SessionProvider>
+          <Root />
+        </SessionProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }
