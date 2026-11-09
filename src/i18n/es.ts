@@ -498,6 +498,8 @@ export const es = {
       noManifest:
         'Esa carpeta no es un envío de Mudanzify: no tiene el archivo mudanzify.json. Elige la carpeta «Mudanzify - …» completa.',
       load: 'No se pudo abrir esta recepción.',
+      folderMissing:
+        'No encontramos la carpeta recibida: se movió, se renombró o el USB no está conectado. Vuelve a ponerla donde estaba, o quita esta recepción de la lista y ábrela de nuevo.',
     },
     back: 'Volver a recepciones',
     steps: {

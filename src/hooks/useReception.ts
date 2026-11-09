@@ -9,6 +9,7 @@ export function useReception(id: string) {
   const [loadFailed, setLoadFailed] = useState(false);
   const [task, setTask] = useState<ReceptionTask | null>(null);
   const [failed, setFailed] = useState(false);
+  const [folderMissing, setFolderMissing] = useState(false);
   const [progress, setProgress] = useState<VerifyProgress | null>(null);
   const taskRef = useRef<ReceptionTask | null>(null);
 
@@ -37,12 +38,14 @@ export function useReception(id: string) {
     taskRef.current = name;
     setTask(name);
     setFailed(false);
+    setFolderMissing(false);
     try {
       const next = await action();
       setReception(next);
       return next;
-    } catch {
-      setFailed(true);
+    } catch (failure) {
+      if (failure instanceof Error && failure.message.includes('RECEPTION_FOLDER_MISSING')) setFolderMissing(true);
+      else setFailed(true);
       return null;
     } finally {
       taskRef.current = null;
@@ -57,8 +60,12 @@ export function useReception(id: string) {
     loadFailed,
     task,
     failed,
+    folderMissing,
     progress,
-    clearError: () => setFailed(false),
+    clearError: () => {
+      setFailed(false);
+      setFolderMissing(false);
+    },
     verify: async () => {
       if (!api) return null;
       setProgress(null);

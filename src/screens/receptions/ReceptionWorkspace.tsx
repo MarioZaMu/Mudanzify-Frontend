@@ -73,6 +73,7 @@ export function ReceptionWorkspace({ id, onBack }: ReceptionWorkspaceProps) {
         />
       </header>
 
+      {reception.folderMissing && <Alert tone="danger">{t.errors.folderMissing}</Alert>}
       {reception.failed && <Alert tone="danger">{t.errors.generic}</Alert>}
 
       <div
