@@ -143,6 +143,7 @@ export function useTransfer(id: string) {
     preview: async () => {
       if (!executionApi) return;
       setPlanFailed(false);
+      setError(null);
       try {
         setPlan(await executionApi.preview(id));
       } catch {

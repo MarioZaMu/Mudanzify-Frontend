@@ -59,6 +59,13 @@ export function TransferWorkspace({ id, onBack }: TransferWorkspaceProps) {
     else if (draft && step === 'execution' && !draft.execution && !planConfirmed(draft)) setStep('analysis');
   }, [draft, step]);
 
+  // An error belongs to the step where it happened: moving on dismisses it.
+  const { clearError } = transfer;
+  useEffect(() => {
+    clearError();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
+
   const goTo = (next: WorkspaceStep) => {
     if (step) setDirection(WORKSPACE_STEPS.indexOf(next) >= WORKSPACE_STEPS.indexOf(step) ? 'next' : 'prev');
     setStep(next);
